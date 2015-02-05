@@ -14,5 +14,7 @@
     <string name="photo">Take Photo</string>
     <string name="button">Button</string>
     <string name="greyscale">Greyscale</string>
+    <string name="stop">Enter a stop number:</string>
+    <string name="search">Search</string>
 
 </resources>

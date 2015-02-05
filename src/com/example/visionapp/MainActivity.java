@@ -1,7 +1,13 @@
 package com.example.visionapp;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -25,6 +31,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 public class MainActivity extends Activity {
@@ -60,6 +67,72 @@ public class MainActivity extends Activity {
         view.draw(canvas);
         return returnedBitmap;
     }
+    
+    public void getRtpi(View view) {
+    	EditText mEdit = (EditText)findViewById(R.id.editText1);
+    	String stopNumber = mEdit.getText().toString();
+    	
+    	Document doc = sendGet(stopNumber);
+		String[][] results = parseDoc(doc);
+    }
+    
+ 	public Document sendGet(String stopNumber) {
+  
+ 		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=2";
+  
+ 		URL obj;
+ 		StringBuffer response = null;
+		try {
+			obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+	   		con.setRequestMethod("GET");
+	   		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+	  
+	 		int responseCode = con.getResponseCode();
+	 		System.out.println("\nSending 'GET' request to URL : " + url);
+	 		System.out.println("Response Code : " + responseCode);
+	  
+	 		BufferedReader in = new BufferedReader(
+	 		        new InputStreamReader(con.getInputStream()));
+	 		String inputLine;
+	 		response = new StringBuffer();
+	  
+	 		while ((inputLine = in.readLine()) != null) {
+	 			response.append(inputLine);
+	 		}
+	 		in.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+ 		
+  
+ 		Document doc = Jsoup.parse(response.toString());
+ 		
+ 		return doc;
+ 	}
+ 	
+ 	public String[][] parseDoc(Document doc) {
+ 		String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
+ 		System.out.println("Stop address is: " + address);
+ 				
+ 		String result = doc.getElementById("rtpi-results").toString();
+ 		String[] parsed = result.split("<tr class=");
+ 		String[][] results = new String[parsed.length - 3][];
+ 		for (int i = 2; i < parsed.length - 1; i++) {
+ 			results[i - 2] = parsed[i].split("<td>");
+ 		}
+ 		
+ 		String[][] splitResults = new String[results.length][3];
+ 		for (int i = 0; i < splitResults.length; i++) {
+ 			for (int j = 0; j < 3; j++) {
+ 				splitResults[i][j] = results[i][j+1];
+ 				splitResults[i][j] = splitResults[i][j].substring(1, splitResults[i][j].length() - 11);
+ 			}
+ 		}
+ 		
+ 		return splitResults;
+ 	}
     
     public void toYuv(View view) {
 		File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
@@ -113,7 +186,8 @@ public class MainActivity extends Activity {
 		image.setImageBitmap(bm);
 	}
 	
-	public void takePic(View view) {
+	
+    public void takePic(View view) {
 		//Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		//startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
 	    //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
