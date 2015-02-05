@@ -77,27 +77,28 @@ public class MainActivity extends Activity {
     public void getRtpi(View view) throws Exception {
     	EditText mEdit = (EditText) findViewById(R.id.editText1);
     	String stopNumber = mEdit.getText().toString();
+    	mEdit.setText("");
     	
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		
-		/*TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
+		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
 		
 		for (int i = 0; i < results.length; i++) {
 			TableRow row = new TableRow(this);
-			TextView t = new TextView(this);
-			
-			t.setText(results[i][0]);
-			
-			row.addView(t);
+			for (int j = 0; j < results[i].length; j++) {
+				TextView t = new TextView(this);
+				t.setText(" " + results[i][j] + " ");
+				row.addView(t);
+			}
 			
 			table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-		}*/
+		}
     }
     
  	public Document sendGet(String stopNumber) throws Exception {
   
- 		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=2";
+ 		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=" + stopNumber;
   
  		URL obj;
  		StringBuffer response = null;
@@ -107,8 +108,8 @@ public class MainActivity extends Activity {
    		con.setRequestProperty("User-Agent", "Mozilla/5.0");
   
  		int responseCode = con.getResponseCode();
- 		System.out.println("\nSending 'GET' request to URL : " + url);
- 		System.out.println("Response Code : " + responseCode);
+ 		//System.out.println("\nSending 'GET' request to URL : " + url);
+ 		//System.out.println("Response Code : " + responseCode);
   
  		BufferedReader in = new BufferedReader(
  		        new InputStreamReader(con.getInputStream()));
@@ -128,7 +129,7 @@ public class MainActivity extends Activity {
  	
  	public String[][] parseDoc(Document doc) {
  		String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
- 		System.out.println("Stop address is: " + address);
+ 		//System.out.println("Stop address is: " + address);
  			
  		String result = doc.getElementById("rtpi-results").toString();
  		String[] parsed = result.split("<tr class=");
