@@ -2,6 +2,7 @@ package com.example.visionapp;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,14 +26,19 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -68,48 +74,57 @@ public class MainActivity extends Activity {
         return returnedBitmap;
     }
     
-    public void getRtpi(View view) {
-    	EditText mEdit = (EditText)findViewById(R.id.editText1);
+    public void getRtpi(View view) throws Exception {
+    	EditText mEdit = (EditText) findViewById(R.id.editText1);
     	String stopNumber = mEdit.getText().toString();
     	
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
+		
+		/*TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
+		
+		for (int i = 0; i < results.length; i++) {
+			TableRow row = new TableRow(this);
+			TextView t = new TextView(this);
+			
+			t.setText(results[i][0]);
+			
+			row.addView(t);
+			
+			table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		}*/
     }
     
- 	public Document sendGet(String stopNumber) {
+ 	public Document sendGet(String stopNumber) throws Exception {
   
  		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=2";
   
  		URL obj;
  		StringBuffer response = null;
-		try {
-			obj = new URL(url);
-			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-	   		con.setRequestMethod("GET");
-	   		con.setRequestProperty("User-Agent", "Mozilla/5.0");
-	  
-	 		int responseCode = con.getResponseCode();
-	 		System.out.println("\nSending 'GET' request to URL : " + url);
-	 		System.out.println("Response Code : " + responseCode);
-	  
-	 		BufferedReader in = new BufferedReader(
-	 		        new InputStreamReader(con.getInputStream()));
-	 		String inputLine;
-	 		response = new StringBuffer();
-	  
-	 		while ((inputLine = in.readLine()) != null) {
-	 			response.append(inputLine);
-	 		}
-	 		in.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+   		con.setRequestMethod("GET");
+   		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+  
+ 		int responseCode = con.getResponseCode();
+ 		System.out.println("\nSending 'GET' request to URL : " + url);
+ 		System.out.println("Response Code : " + responseCode);
+  
+ 		BufferedReader in = new BufferedReader(
+ 		        new InputStreamReader(con.getInputStream()));
+ 		String inputLine;
+ 		response = new StringBuffer();
+  
+ 		while ((inputLine = in.readLine()) != null) {
+ 			response.append(inputLine);
+ 		}
+ 		in.close();
  		
   
- 		Document doc = Jsoup.parse(response.toString());
+ 		//Document doc = Jsoup.parse(response.toString());
  		
- 		return doc;
+ 		//return doc;
+ 		return null;
  	}
  	
  	public String[][] parseDoc(Document doc) {
@@ -214,7 +229,11 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+		StrictMode.setThreadPolicy(policy);
 		super.onCreate(savedInstanceState);
+		//setContentView(R.layout.activity_main);
 		setContentView(R.layout.activity_main);
 
 		if (savedInstanceState == null) {
