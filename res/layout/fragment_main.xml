@@ -26,7 +26,8 @@
         android:layout_alignBottom="@+id/button3"
         android:layout_toRightOf="@+id/imageView1"
         android:onClick="toHls"
-        android:text="@string/hls" />
+        android:text="@string/hls"
+        android:visibility="invisible" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -36,7 +37,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="38dp"
         android:contentDescription="@string/image"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button1"
@@ -46,7 +48,8 @@
         android:layout_alignBottom="@+id/button3"
         android:layout_toLeftOf="@+id/imageView1"
         android:onClick="toYuv"
-        android:text="@string/yuv" />
+        android:text="@string/yuv"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button5"
@@ -56,7 +59,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="52dp"
         android:onClick="toGrey"
-        android:text="@string/greyscale" />
+        android:text="@string/greyscale"
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/button3"
@@ -66,6 +70,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:onClick="toRgb"
-        android:text="@string/rgb" />
+        android:text="@string/rgb"
+        android:visibility="invisible" />
 
 </RelativeLayout>
