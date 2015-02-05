@@ -120,17 +120,16 @@ public class MainActivity extends Activity {
  		}
  		in.close();
  		
-  
- 		//Document doc = Jsoup.parse(response.toString());
+ 
+ 		Document doc = Jsoup.parse(response.toString());
  		
- 		//return doc;
- 		return null;
+ 		return doc;
  	}
  	
  	public String[][] parseDoc(Document doc) {
  		String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
  		System.out.println("Stop address is: " + address);
- 				
+ 			
  		String result = doc.getElementById("rtpi-results").toString();
  		String[] parsed = result.split("<tr class=");
  		String[][] results = new String[parsed.length - 3][];
