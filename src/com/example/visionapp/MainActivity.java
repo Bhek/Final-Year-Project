@@ -2,7 +2,6 @@ package com.example.visionapp;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -96,7 +95,7 @@ public class MainActivity extends Activity {
 		}
     }
     
- 	public Document sendGet(String stopNumber) throws Exception {
+ 	private Document sendGet(String stopNumber) throws Exception {
   
  		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=" + stopNumber;
   
@@ -107,7 +106,7 @@ public class MainActivity extends Activity {
    		con.setRequestMethod("GET");
    		con.setRequestProperty("User-Agent", "Mozilla/5.0");
   
- 		int responseCode = con.getResponseCode();
+ 		//int responseCode = con.getResponseCode();
  		//System.out.println("\nSending 'GET' request to URL : " + url);
  		//System.out.println("Response Code : " + responseCode);
   
@@ -127,8 +126,8 @@ public class MainActivity extends Activity {
  		return doc;
  	}
  	
- 	public String[][] parseDoc(Document doc) {
- 		String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
+ 	private String[][] parseDoc(Document doc) {
+ 		//String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
  		//System.out.println("Stop address is: " + address);
  			
  		String result = doc.getElementById("rtpi-results").toString();
@@ -148,76 +147,11 @@ public class MainActivity extends Activity {
  		
  		return splitResults;
  	}
-    
-    public void toYuv(View view) {
-		File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		ImageView image = (ImageView) findViewById(R.id.imageView1);
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		//View photo = findViewById(R.id.imageView1);
-		//ImageView image = (ImageView) findViewById(R.id.imageView1);
-		//Bitmap bm = getBitmapFromView(photo);
-		Utils.bitmapToMat(bm, m);
-		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2YUV);
-		Utils.matToBitmap(m, bm);
-		image.setImageBitmap(bm);
-	}
-    
-    public void toRgb(View view) {
-		File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		ImageView image = (ImageView) findViewById(R.id.imageView1);
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		//View photo = findViewById(R.id.imageView1);
-		//ImageView image = (ImageView) findViewById(R.id.imageView1);
-		//Bitmap bm = getBitmapFromView(photo);
-		Utils.bitmapToMat(bm, m);
-		//Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2GRAY);
-		//Utils.matToBitmap(m, bm);
-		image.setImageBitmap(bm);
-	}
-	
-    public void toHls(View view) {
-		File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		ImageView image = (ImageView) findViewById(R.id.imageView1);
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		//View photo = findViewById(R.id.imageView1);
-		//ImageView image = (ImageView) findViewById(R.id.imageView1);
-		//Bitmap bm = getBitmapFromView(photo);
-		Utils.bitmapToMat(bm, m);
-		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2HLS);
-		Utils.matToBitmap(m, bm);
-		image.setImageBitmap(bm);
-	}
-    
-    public void toGrey(View view) {
-		File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		ImageView image = (ImageView) findViewById(R.id.imageView1);
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		//View photo = findViewById(R.id.imageView1);
-		//ImageView image = (ImageView) findViewById(R.id.imageView1);
-		//Bitmap bm = getBitmapFromView(photo);
-		Utils.bitmapToMat(bm, m);
-		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2GRAY);
-		Utils.matToBitmap(m, bm);
-		image.setImageBitmap(bm);
-	}
-	
-	
-    public void takePic(View view) {
-		//Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		//startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-	    //if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-	        //startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-	    //}
-	}
-	
-	public void filecheck(View view) {
-		File f = new File("/storage");        
-		File file[] = f.listFiles();
-		Log.d("Files", "Size: "+ file.length);
-		for (int i=0; i < file.length; i++) {
-		    Log.d("Files", "FileName:" + file[i].getName());
-		}
-	}
+ 	
+ 	public void back() {
+ 		
+ 	}
+ 	
 	
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_IMAGE_CAPTURE) {

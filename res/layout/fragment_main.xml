@@ -7,77 +7,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.visionapp.MainActivity$PlaceholderFragment" >
-
-    <!-- <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="28dp"
-        android:onClick="filecheck"
-        android:text="@string/button" /> -->
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_toRightOf="@+id/imageView1"
-        android:onClick="toHls"
-        android:text="@string/hls"
-        android:visibility="invisible" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="38dp"
-        android:contentDescription="@string/image"
-        android:src="@drawable/ic_launcher"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_toLeftOf="@+id/imageView1"
-        android:onClick="toYuv"
-        android:text="@string/yuv"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp"
-        android:onClick="toGrey"
-        android:text="@string/greyscale"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button5"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:onClick="toRgb"
-        android:text="@string/rgb"
-        android:visibility="invisible" />
-
+    
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/imageView1"
         android:layout_centerHorizontal="true"
         android:text="@string/stop"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -93,7 +27,7 @@
         android:inputType="number" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
@@ -106,8 +40,20 @@
         android:id="@+id/tableLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/button5"
-        android:layout_centerHorizontal="true" >
+        android:layout_centerHorizontal="true"
+        android:visibility="visible" >
+
     </TableLayout>
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="101dp"
+        android:onClick="goBack"
+        android:text="@string/back"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -52,20 +52,15 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f04000d;
+        public static final int action_settings=0x7f040008;
         public static final int any=0x7f040000;
         public static final int back=0x7f040001;
-        public static final int button1=0x7f040007;
-        public static final int button2=0x7f040004;
-        public static final int button3=0x7f040005;
-        public static final int button4=0x7f04000b;
-        public static final int button5=0x7f040008;
         public static final int container=0x7f040003;
-        public static final int editText1=0x7f04000a;
+        public static final int editText1=0x7f040005;
         public static final int front=0x7f040002;
-        public static final int imageView1=0x7f040006;
-        public static final int tableLayout1=0x7f04000c;
-        public static final int textView1=0x7f040009;
+        public static final int search=0x7f040006;
+        public static final int tableLayout1=0x7f040007;
+        public static final int textView1=0x7f040004;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -73,24 +68,14 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int main=0x7f080000;
-        public static final int my_camera=0x7f080001;
     }
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
-        public static final int button=0x7f06000b;
-        public static final int desc=0x7f060007;
-        public static final int greyscale=0x7f06000c;
+        public static final int back=0x7f060005;
         public static final int hello_world=0x7f060001;
-        public static final int hls=0x7f060004;
-        public static final int image=0x7f060006;
-        public static final int photo=0x7f06000a;
-        public static final int rgb=0x7f060003;
-        public static final int search=0x7f06000e;
-        public static final int stop=0x7f06000d;
-        public static final int takepic=0x7f060008;
-        public static final int title_activity_my_camera=0x7f060009;
-        public static final int yuv=0x7f060005;
+        public static final int search=0x7f060004;
+        public static final int stop=0x7f060003;
     }
     public static final class style {
         /** 
