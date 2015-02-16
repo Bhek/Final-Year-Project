@@ -7,5 +7,6 @@
     <string name="stop">Enter a stop number:</string>
     <string name="search">Search</string>
     <string name="back">Back</string>
+    <string name="title_activity_results">ResultsActivity</string>
 
 </resources>

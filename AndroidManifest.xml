@@ -3,9 +3,11 @@
     package="com.example.visionapp"
     android:versionCode="1"
     android:versionName="1.0" >
-    
-    <uses-feature android:name="android.hardware.camera"
-                  android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -27,6 +29,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.example.visionapp.ResultsActivity"
+            android:label="@string/title_activity_results" >
         </activity>
     </application>
 

@@ -36,24 +36,4 @@
         android:onClick="getRtpi"
         android:text="@string/search" />
 
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="69dp"
-        android:onClick="goBack"
-        android:text="@string/back"
-        android:visibility="invisible" />
-
-    <TableLayout
-        android:id="@+id/tableLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/stop"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible" >
-    </TableLayout>
-
 </RelativeLayout>
