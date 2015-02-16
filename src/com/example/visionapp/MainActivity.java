@@ -1,7 +1,6 @@
 package com.example.visionapp;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,15 +10,12 @@ import org.jsoup.nodes.Document;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -34,7 +30,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -93,6 +88,8 @@ public class MainActivity extends Activity {
 			
 			table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		}
+		
+		setVisibilities();
     }
     
  	private Document sendGet(String stopNumber) throws Exception {
@@ -105,10 +102,6 @@ public class MainActivity extends Activity {
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
    		con.setRequestMethod("GET");
    		con.setRequestProperty("User-Agent", "Mozilla/5.0");
-  
- 		//int responseCode = con.getResponseCode();
- 		//System.out.println("\nSending 'GET' request to URL : " + url);
- 		//System.out.println("Response Code : " + responseCode);
   
  		BufferedReader in = new BufferedReader(
  		        new InputStreamReader(con.getInputStream()));
@@ -127,9 +120,6 @@ public class MainActivity extends Activity {
  	}
  	
  	private String[][] parseDoc(Document doc) {
- 		//String address = doc.getElementById("ctl00_FullRegion_MainRegion_ContentColumns_holder_RealTimeStopInformation1_lblStopAddress").text().toString();
- 		//System.out.println("Stop address is: " + address);
- 			
  		String result = doc.getElementById("rtpi-results").toString();
  		String[] parsed = result.split("<tr class=");
  		String[][] results = new String[parsed.length - 3][];
@@ -148,8 +138,41 @@ public class MainActivity extends Activity {
  		return splitResults;
  	}
  	
- 	public void back() {
+ 	private void setVisibilities() {
+ 		View table = findViewById(R.id.tableLayout1);
+ 		table.setVisibility(View.VISIBLE);
  		
+ 		View backButton = findViewById(R.id.back);
+ 		backButton.setVisibility(View.VISIBLE);
+ 		
+ 		View stopNumber = findViewById(R.id.stop);
+ 		stopNumber.setVisibility(View.INVISIBLE);
+ 		
+ 		View mEdit = findViewById(R.id.editText1);
+ 		mEdit.setVisibility(View.INVISIBLE);
+ 		
+ 		View searchButton = findViewById(R.id.search);
+ 		searchButton.setVisibility(View.INVISIBLE);
+ 	}
+ 	
+ 	public void goBack(View view) {
+ 		View table = findViewById(R.id.tableLayout1);
+ 		table.setVisibility(View.INVISIBLE);
+ 		
+ 		View backButton = findViewById(R.id.back);
+ 		backButton.setVisibility(View.INVISIBLE);
+ 		
+ 		View stopNumber = findViewById(R.id.stop);
+ 		stopNumber.setVisibility(View.VISIBLE);
+ 		
+ 		View mEdit = findViewById(R.id.editText1);
+ 		mEdit.setVisibility(View.VISIBLE);
+ 		
+ 		View searchButton = findViewById(R.id.search);
+ 		searchButton.setVisibility(View.VISIBLE);
+ 		
+ 		TableLayout tableLayout = (TableLayout) table;
+ 		tableLayout.removeAllViewsInLayout();
  	}
  	
 	

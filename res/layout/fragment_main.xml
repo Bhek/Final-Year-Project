@@ -9,7 +9,7 @@
     tools:context="com.example.visionapp.MainActivity$PlaceholderFragment" >
     
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -20,7 +20,7 @@
         android:id="@+id/editText1"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/stop"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:ems="10"
@@ -36,24 +36,24 @@
         android:onClick="getRtpi"
         android:text="@string/search" />
 
-    <TableLayout
-        android:id="@+id/tableLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:visibility="visible" >
-
-    </TableLayout>
-
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/search"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="101dp"
+        android:layout_marginBottom="69dp"
         android:onClick="goBack"
         android:text="@string/back"
         android:visibility="invisible" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stop"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" >
+    </TableLayout>
 
 </RelativeLayout>

@@ -59,8 +59,8 @@ containing a value of this type.
         public static final int editText1=0x7f040005;
         public static final int front=0x7f040002;
         public static final int search=0x7f040006;
+        public static final int stop=0x7f040004;
         public static final int tableLayout1=0x7f040007;
-        public static final int textView1=0x7f040004;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
