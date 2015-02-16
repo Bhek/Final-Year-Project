@@ -8,5 +8,6 @@
     <string name="search">Search</string>
     <string name="back">Back</string>
     <string name="title_activity_results">ResultsActivity</string>
+    <string name="take_picture">Take Picture</string>
 
 </resources>

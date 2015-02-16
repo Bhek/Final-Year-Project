@@ -15,6 +15,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class MainActivity extends Activity {
 	static final int REQUEST_IMAGE_CAPTURE = 1;
@@ -66,6 +68,23 @@ public class MainActivity extends Activity {
 		intent.putExtra("rtpi stop", stopNumber);
 		startActivity(intent);
     }
+    
+    public void takePicture(View view) throws Exception {
+    	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    	if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+    		startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+    	}
+    }
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+			ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
+			Bundle extras = data.getExtras();
+			Bitmap imageBitmap = (Bitmap) extras.get("data");
+			mImageView.setImageBitmap(imageBitmap);
+		}
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

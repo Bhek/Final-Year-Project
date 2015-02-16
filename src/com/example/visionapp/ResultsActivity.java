@@ -39,7 +39,6 @@ public class ResultsActivity extends Activity {
         try {
 			getRtpi();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     } 
@@ -80,8 +79,7 @@ public class ResultsActivity extends Activity {
    		con.setRequestMethod("GET");
    		con.setRequestProperty("User-Agent", "Mozilla/5.0");
   
- 		BufferedReader in = new BufferedReader(
- 		        new InputStreamReader(con.getInputStream()));
+ 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
  		String inputLine;
  		response = new StringBuffer();
   
