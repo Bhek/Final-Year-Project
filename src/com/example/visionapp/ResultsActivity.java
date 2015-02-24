@@ -69,8 +69,8 @@ public class ResultsActivity extends Activity {
     }
     
  	private Document sendGet(String stopNumber) throws Exception {
-  
- 		String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=" + stopNumber;
+		//String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=" + stopNumber;
+ 		String url = "http://rtpi.ie/Text/WebDisplay.aspx?stopRef=" + ("00000" + stopNumber).substring(stopNumber.length());
   
  		URL obj;
  		StringBuffer response = null;
@@ -95,22 +95,27 @@ public class ResultsActivity extends Activity {
  	}
  	
  	private String[][] parseDoc(Document doc) {
- 		String result = doc.getElementById("rtpi-results").toString();
- 		String[] parsed = result.split("<tr class=");
- 		String[][] results = new String[parsed.length - 3][];
- 		for (int i = 2; i < parsed.length - 1; i++) {
- 			results[i - 2] = parsed[i].split("<td>");
- 		}
- 		
- 		String[][] splitResults = new String[results.length][3];
- 		for (int i = 0; i < splitResults.length; i++) {
- 			for (int j = 0; j < 3; j++) {
- 				splitResults[i][j] = results[i][j+1];
- 				splitResults[i][j] = splitResults[i][j].substring(1, splitResults[i][j].length() - 11);
- 			}
- 		}
- 		
- 		return splitResults;
+ 		String result = doc.getElementsByClass("webDisplayTable").toString();
+		String[] parsed = result.split("<tr");
+		String[][] results = new String[parsed.length - 2][];
+		for (int i = 1; i < parsed.length - 1; i++) {
+			results[i - 1] = parsed[i].split("<td");
+		}
+				
+		String[][] splitResults = new String[results.length-1][3];
+		for (int i = 0; i < splitResults.length; i++) {
+			for (int j = 0; j < 3; j++) {
+				splitResults[i][j] = results[i+1][j+1];
+				if (j == 2) {
+					splitResults[i][j] = splitResults[i][j].substring(33, splitResults[i][j].length() - 9);
+				}
+				else {
+					splitResults[i][j] = splitResults[i][j].substring(19, splitResults[i][j].length() - 9);
+				}
+			}
+		}
+		
+		return splitResults;
  	}
 
 	@Override
