@@ -117,6 +117,10 @@ public class ResultsActivity extends Activity {
 		
 		return splitResults;
  	}
+ 	
+ 	public void goBack(View view) {
+ 		
+ 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
