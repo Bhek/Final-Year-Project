@@ -3,6 +3,7 @@ package com.example.visionapp;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import android.app.Activity;
@@ -83,7 +84,12 @@ public class MainActivity extends Activity {
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
 			mImageView.setImageBitmap(imageBitmap);
+			processImage(imageBitmap);
 		}
+	}
+	
+	protected void processImage(Bitmap bitmap) {
+		m = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 	}
 
 	@Override
