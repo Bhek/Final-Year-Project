@@ -69,7 +69,6 @@ public class ResultsActivity extends Activity {
     }
     
  	private Document sendGet(String stopNumber) throws Exception {
-		//String url = "http://www.dublinbus.ie/en/RTPI/Sources-of-Real-Time-Information/?searchtype=stop&searchquery=" + stopNumber;
  		String url = "http://rtpi.ie/Text/WebDisplay.aspx?stopRef=" + ("00000" + stopNumber).substring(stopNumber.length());
   
  		URL obj;
