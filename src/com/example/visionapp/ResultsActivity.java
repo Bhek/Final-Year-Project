@@ -118,6 +118,7 @@ public class ResultsActivity extends Activity {
  	}
  	
  	public void goBack(View view) {
+ 		// TODO: return from ResultsActivity() to MainActivity()
  		
  	}
 
