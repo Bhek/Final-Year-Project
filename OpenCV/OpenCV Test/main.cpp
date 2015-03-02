@@ -8,6 +8,7 @@ Mat* loadImages(int numberOfImages, char* location, char** files);
 void showImage(char* name, Mat image);
 void findSign(Mat image);
 void findSign(Mat image, Mat temp);
+void backProject(Mat image, Mat sample);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -76,6 +77,8 @@ Mat* loadImages(int numberOfImages, char* location, char** files) {
 void showImage(char* name, Mat image) {
 	resize(image, image, Size(image.cols / 4, image.rows / 4));
 	imshow(name, image);
+
+	return;
 }
 
 void findSign(Mat image) {
@@ -83,4 +86,11 @@ void findSign(Mat image) {
 	cvtColor(image, hsv, CV_BGR2HSV);
 	inRange(hsv, Scalar(15, 135, 140), Scalar(30, 255, 255), hsv);
 	showImage("Result", hsv);
+
+	return;
+}
+
+void backProject(Mat image, Mat sample) {
+
+	return;
 }
