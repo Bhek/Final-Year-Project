@@ -32,7 +32,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		"stop.png",
 		"stop&no.png",
 		"stop2.png",
-		"stop&no2.png"
+		"stop&no2.png",
+		"yellow.png"
 	};
 
 	int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
