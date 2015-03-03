@@ -1,4 +1,4 @@
-// OpenCV Test.cpp : Defines the entry point for the console application.
+// main.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
@@ -8,7 +8,7 @@ Mat* loadImages(int numberOfImages, char* location, char** files);
 void showImage(char* name, Mat image);
 void findSign(Mat image);
 void findSign(Mat image, Mat temp);
-void backProject(Mat image, Mat sample);
+void backProject(Mat image, Mat yellow);
 void digitRecognition(Mat image);
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -42,6 +42,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
 	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
 	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
+
+	backProject(busStops[6], templates[4]);
 
 	for (int i = 0; i < numberOfTestImages; i++) {
 		cout << "Processing image " << (i + 1) << endl;
@@ -91,7 +93,8 @@ void findSign(Mat image) {
 	return;
 }
 
-void backProject(Mat image, Mat sample) {
+void backProject(Mat image, Mat yellow) {
+	
 
 	return;
 }
