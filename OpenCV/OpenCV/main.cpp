@@ -9,6 +9,7 @@ void showImage(char* name, Mat image);
 void findSign(Mat image);
 void findSign(Mat image, Mat temp);
 void backProject(Mat image, Mat sample);
+void digitRecognition(Mat image);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -91,6 +92,11 @@ void findSign(Mat image) {
 }
 
 void backProject(Mat image, Mat sample) {
+
+	return;
+}
+
+void digitRecognition(Mat image) {
 
 	return;
 }
