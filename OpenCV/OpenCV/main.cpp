@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Utilities.h"
 
+Mat loadImage(char* location, char* file);
 Mat* loadImages(int numberOfImages, char* location, char** files);
 void showImage(char* name, Mat image);
 void findSign(Mat image);
@@ -13,6 +14,7 @@ void digitRecognition(Mat image);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	cout << "Using OpenCV " << CV_VERSION << endl;
 	char* testLocation = "Media/Test Images/";
 	char* testFiles[] = {
 		"2809 a.jpg",
@@ -38,14 +40,20 @@ int _tmain(int argc, _TCHAR* argv[])
 		"yellow.png"
 	};
 
-	int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
+	Mat sign = loadImage(testLocation, testFiles[6]);
+	Mat yellow = loadImage(templateLocation, templateFiles[4]);
+
+	showImage("Stop", sign);
+	waitKey(0);
+
+	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
 	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
 	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
 
 	backProject(busStops[6], templates[4]);
 
-	/*for (int i = 0; i < numberOfTestImages; i++) {
+	for (int i = 0; i < numberOfTestImages; i++) {
 		cout << "Processing image " << (i + 1) << endl;
 		findSign(busStops[i]);
 		if (i == 0 || i == 1) {
@@ -64,6 +72,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	}*/
 
 	return 0;
+}
+
+Mat loadImage(char* location, char* file) {
+	string filename(location);
+	filename.append(file);
+	Mat image = imread(filename, 1);
+
+	return image;
 }
 
 Mat* loadImages(int numberOfImages, char* location, char** files) {
