@@ -45,7 +45,7 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	backProject(busStops[6], templates[4]);
 
-	for (int i = 0; i < numberOfTestImages; i++) {
+	/*for (int i = 0; i < numberOfTestImages; i++) {
 		cout << "Processing image " << (i + 1) << endl;
 		findSign(busStops[i]);
 		if (i == 0 || i == 1) {
@@ -61,7 +61,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		
 		showImage("Bus Stop", busStops[i]);
 		waitKey(0);
-	}
+	}*/
 
 	return 0;
 }
@@ -94,7 +94,29 @@ void findSign(Mat image) {
 }
 
 void backProject(Mat image, Mat yellow) {
-	
+	Mat hsv;
+	cvtColor(image, hsv, COLOR_BGR2HSV);
+	Mat hsvt;
+	cvtColor(yellow, hsvt, COLOR_BGR2HSV);
+
+	int histSize = 25;
+	float hueRanges[] = { 0, 180 };
+	const float* ranges = { hueRanges };
+
+	MatND hist;
+	//calcHist(hsv, 1, 0, Mat(), hist, 1, MAX(25, 2), { 0, 180 }, true, false);
+	calcHist(&hsv, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
+	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
+
+	MatND backProj;
+	calcBackProject(&hsvt, 1, 0, hist, backProj, &ranges, 1, true);
+
+	imshow("Back project", backProj);
+	waitKey(0);
+
+	showImage("Stop", hsv);
+	imshow("Yellow", hsvt);
+	waitKey(0);
 
 	return;
 }
