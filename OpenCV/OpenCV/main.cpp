@@ -105,6 +105,7 @@ void backProject(Mat image, Mat yellow) {
 
 	MatND hist;
 	//calcHist(hsv, 1, 0, Mat(), hist, 1, MAX(25, 2), { 0, 180 }, true, false);
+	// TODO: fix the following function
 	calcHist(&hsv, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
 	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
 
