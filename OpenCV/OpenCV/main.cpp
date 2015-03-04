@@ -123,6 +123,7 @@ void backProject(Mat image, Mat yellow) {
 }
 
 void digitRecognition(Mat image) {
+	// TODO: complete function
 
 	return;
 }
