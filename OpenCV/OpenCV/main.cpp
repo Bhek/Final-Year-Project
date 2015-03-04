@@ -43,8 +43,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat sign = loadImage(testLocation, testFiles[6]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
-	showImage("Stop", sign);
-	waitKey(0);
+	backProject(sign, yellow);
 
 	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
@@ -119,16 +118,21 @@ void backProject(Mat image, Mat yellow) {
 	float hueRanges[] = { 0, 180 };
 	const float* ranges = { hueRanges };
 
+	Mat hue;
+	hue.create(hsv.size(), hsv.depth());
+	int ch[] = { 0, 0 };
+	mixChannels(&hsv, 1, &hue, 1, ch, 1);
+
 	MatND hist;
 	//calcHist(hsv, 1, 0, Mat(), hist, 1, MAX(25, 2), { 0, 180 }, true, false);
 	// TODO: fix the following function
-	calcHist(&hsv, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
+	calcHist(&hue, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
 	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
 
 	MatND backProj;
-	calcBackProject(&hsvt, 1, 0, hist, backProj, &ranges, 1, true);
+	calcBackProject(&hue, 1, 0, hist, backProj, &ranges, 1, true);
 
-	imshow("Back project", backProj);
+	showImage("Back project", backProj);
 	waitKey(0);
 
 	showImage("Stop", hsv);
