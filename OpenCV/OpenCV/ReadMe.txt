@@ -29,7 +29,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named OpenCV Test.pch and a precompiled types file named StdAfx.obj.
+    named OpenCV.pch and a precompiled types file named StdAfx.obj.
 
 /////////////////////////////////////////////////////////////////////////////
 Other notes:
