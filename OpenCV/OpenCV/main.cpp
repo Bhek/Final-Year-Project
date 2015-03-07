@@ -4,20 +4,29 @@
 #include "stdafx.h"
 #include "Utilities.h"
 
+// Functions to load in a single image or all images
 Mat loadImage(char* location, char* file);
 Mat* loadImages(int numberOfImages, char* location, char** files);
+
+// A function which temporarily resizes images before showing them
 void showImage(char* name, Mat image);
+
+// "Sign" functions - used to detect bus stop signs
 Mat findSign(Mat image);
 Mat binaryImage(Mat image);
 Mat backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
+
+// "Number" function - used to detect the stop number from the sign
 void digitRecognition(Mat image);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	cout << "Using OpenCV " << CV_VERSION << endl;
-	char* testLocation = "Media/Test Images/";
+	char* testLocation = "Media/Test Images/";	// Location of bus stop sign images
+	
+	// Bus stop sign images
 	char* testFiles[] = {
 		"2809 a.jpg",
 		"2809 b.jpg",
@@ -33,7 +42,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		"2839 d.jpg"
 	};
 
-	char* templateLocation = "Media/Templates/";
+	char* templateLocation = "Media/Templates/";	// Location of sample stop sign images
+
+	// Sample stop sign images
 	char* templateFiles[] = {
 		"stop.png",
 		"stop&no.png",
@@ -165,7 +176,6 @@ Mat getHue(Mat image) {
 }
 
 Mat templateMatching(Mat image, Mat templateImage) {
-	// TODO: try templateMatching as a method for finding signs
 	Mat result;
 
 	Mat imageDisplay;
