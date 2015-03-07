@@ -50,7 +50,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
 	Mat backProjSign = backProjection(sign, yellow);
-	Mat templateMatch = templateMatching(sign, templateSign);
+	//Mat templateMatch = templateMatching(sign, templateSign);
+	Mat templateMatch = templateMatching(sign, yellow);
 
 	showImage("HSV", hsvSign);
 	showImage("Binary", binary);
@@ -188,7 +189,12 @@ Mat templateMatching(Mat image, Mat templateImage) {
 	rectangle(imageDisplay, matchLoc, Point(matchLoc.x + templateImage.cols, matchLoc.y + templateImage.rows), Scalar::all(0), 2, 8, 0);
 	rectangle(result, matchLoc, Point(matchLoc.x + templateImage.cols, matchLoc.y + templateImage.rows), Scalar::all(0), 2, 8, 0);
 
-	return result;
+	/*showImage("Image", imageDisplay);
+	showImage("Result", result);
+	waitKey(0);*/
+
+	//return result;
+	return imageDisplay;
 }
 
 void digitRecognition(Mat image) {
