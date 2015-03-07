@@ -12,12 +12,7 @@ Mat binaryImage(Mat image);
 Mat backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
-/*void backProjection(Mat image, Mat yellow);
-void Hist_and_Backproj(int, void*);*/
 void digitRecognition(Mat image);
-
-/*Mat src; Mat hsv; Mat hue; Mat hue2;
-int bins = 180;*/
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -48,10 +43,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	};
 
 	Mat sign = loadImage(testLocation, testFiles[6]);
-	Mat templateSign = loadImage(testLocation, templateFiles[2]);
+	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
-	showImage("Sign", sign);
+	showImage("Bus Stop Sign", sign);
 	Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
 	Mat backProjSign = backProjection(sign, yellow);
@@ -171,7 +166,27 @@ Mat getHue(Mat image) {
 Mat templateMatching(Mat image, Mat templateImage) {
 	// TODO: try templateMatching as a method for finding signs
 	Mat result;
-	image.copyTo(result);
+
+	Mat imageDisplay;
+	image.copyTo(imageDisplay);
+
+	int rows = image.rows - templateImage.rows + 1;
+	int cols = image.cols - templateImage.cols + 1;
+
+	result.create(rows, cols, CV_32FC1);
+
+	matchTemplate(image, templateImage, result, CV_TM_SQDIFF);
+	normalize(result, result, 0, 1, NORM_MINMAX, -1, Mat());
+
+	double minVal, maxVal;
+	Point minLoc, maxLoc, matchLoc;
+
+	minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc, Mat());
+
+	matchLoc = minLoc;
+
+	rectangle(imageDisplay, matchLoc, Point(matchLoc.x + templateImage.cols, matchLoc.y + templateImage.rows), Scalar::all(0), 2, 8, 0);
+	rectangle(result, matchLoc, Point(matchLoc.x + templateImage.cols, matchLoc.y + templateImage.rows), Scalar::all(0), 2, 8, 0);
 
 	return result;
 }
