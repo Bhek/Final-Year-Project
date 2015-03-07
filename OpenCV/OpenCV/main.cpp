@@ -8,6 +8,7 @@ Mat loadImage(char* location, char* file);
 Mat* loadImages(int numberOfImages, char* location, char** files);
 void showImage(char* name, Mat image);
 Mat findSign(Mat image);
+Mat binaryImage(Mat image);
 MatND backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
@@ -52,10 +53,12 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	showImage("Sign", sign);
 	Mat hsvSign = findSign(sign);
+	Mat binary = binaryImage(sign);
 	MatND backProjSign = backProjection(sign, yellow);
 	Mat templateMatch = templateMatching(sign, templateSign);
 
 	showImage("HSV", hsvSign);
+	showImage("Binary", binary);
 	showImage("Back Projection", backProjSign);
 	showImage("Template Matching", templateMatch);
 	waitKey(0);
@@ -120,6 +123,14 @@ Mat findSign(Mat image) {
 	inRange(hsv, Scalar(15, 135, 140), Scalar(30, 255, 255), hsv);
 
 	return hsv;
+}
+
+Mat binaryImage(Mat image) {
+	Mat greyImage, binaryResult;
+	cvtColor(image, greyImage, CV_BGR2GRAY);
+	threshold(greyImage, binaryResult, 200, 255, THRESH_BINARY);
+
+	return binaryResult;
 }
 
 MatND backProjection(Mat image, Mat yellow) {
