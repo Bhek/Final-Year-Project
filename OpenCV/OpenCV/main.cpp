@@ -10,6 +10,7 @@ void showImage(char* name, Mat image);
 Mat findSign(Mat image);
 MatND backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
+Mat templateMatching(Mat image, Mat templateImage);
 /*void backProjection(Mat image, Mat yellow);
 void Hist_and_Backproj(int, void*);*/
 void digitRecognition(Mat image);
@@ -46,14 +47,17 @@ int _tmain(int argc, _TCHAR* argv[])
 	};
 
 	Mat sign = loadImage(testLocation, testFiles[6]);
+	Mat templateSign = loadImage(testLocation, templateFiles[2]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
 	showImage("Sign", sign);
 	Mat hsvSign = findSign(sign);
 	MatND backProjSign = backProjection(sign, yellow);
+	Mat templateMatch = templateMatching(sign, templateSign);
 
 	showImage("HSV", hsvSign);
 	showImage("Back Projection", backProjSign);
+	showImage("Template Matching", templateMatch);
 	waitKey(0);
 
 	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
@@ -145,6 +149,14 @@ Mat getHue(Mat image) {
 	mixChannels(&hsv, 1, &hue, 1, ch, 1);
 
 	return hue;
+}
+
+Mat templateMatching(Mat image, Mat templateImage) {
+	// TODO: try templateMatching as a method for finding signs
+	Mat result;
+	image.copyTo(result);
+
+	return result;
 }
 
 void digitRecognition(Mat image) {
