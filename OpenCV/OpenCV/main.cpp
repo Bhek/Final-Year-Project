@@ -118,40 +118,12 @@ void findSign(Mat image) {
 }
 
 void backProject(Mat image, Mat yellow) {
-	Mat hsv;
-	cvtColor(image, hsv, COLOR_BGR2HSV);
-	Mat hsvt;
-	cvtColor(yellow, hsvt, COLOR_BGR2HSV);
-
-	int histSize = 25;
-	float hueRanges[] = { 0, 180 };
-	const float* ranges = { hueRanges };
-
-	Mat hue;
-	hue.create(hsv.size(), hsv.depth());
-	int ch[] = { 0, 0 };
-	mixChannels(&hsv, 1, &hue, 1, ch, 1);
-
-	MatND hist;
-	//calcHist(hsv, 1, 0, Mat(), hist, 1, MAX(25, 2), { 0, 180 }, true, false);
-	// TODO: fix the following function
-	calcHist(&hue, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
-	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
-
-	MatND backProj;
-	calcBackProject(&hue, 1, 0, hist, backProj, &ranges, 1, true);
-
-	showImage("Back project", backProj);
-	showImage("Stop", hue);
-	//imshow("Yellow", hsvt);
-	waitKey(0);
+	
 
 	return;
 }
 
 void backProjection(Mat image, Mat yellow) {
-
-
 	/** @function main */
 	/// Read the image
 	//src = imread(argv[1], 1);
