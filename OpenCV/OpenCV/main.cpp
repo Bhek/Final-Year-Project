@@ -9,7 +9,7 @@ Mat* loadImages(int numberOfImages, char* location, char** files);
 void showImage(char* name, Mat image);
 Mat findSign(Mat image);
 Mat binaryImage(Mat image);
-MatND backProjection(Mat image, Mat yellow);
+Mat backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
 /*void backProjection(Mat image, Mat yellow);
@@ -54,7 +54,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Sign", sign);
 	Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
-	MatND backProjSign = backProjection(sign, yellow);
+	Mat backProjSign = backProjection(sign, yellow);
 	Mat templateMatch = templateMatching(sign, templateSign);
 
 	showImage("HSV", hsvSign);
@@ -73,7 +73,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		showImage("Sign", busStops[i]);
 		Mat hsvSign = findSign(busStops[i]);
 		Mat binary = binaryImage(busStops[i]);
-		MatND backProjSign = backProjection(busStops[i], templates[4]);
+		Mat backProjSign = backProjection(busStops[i], templates[4]);
 		Mat templateMatch;
 		if (i == 0 || i == 1) {
 			// templates[0] or templates[1]
@@ -139,11 +139,11 @@ Mat binaryImage(Mat image) {
 	return binaryResult;
 }
 
-MatND backProjection(Mat image, Mat yellow) {
+Mat backProjection(Mat image, Mat yellow) {
 	Mat imageHue = getHue(image);
 	Mat yellowHue = getHue(yellow);
 
-	MatND hist;
+	Mat hist;
 	int histSize = 180;
 	float hue_range[] = { 0, 180 };
 	const float* ranges = { hue_range };
@@ -151,7 +151,7 @@ MatND backProjection(Mat image, Mat yellow) {
 	calcHist(&yellowHue, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
 	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
 
-	MatND backProject;
+	Mat backProject;
 	calcBackProject(&imageHue, 1, 0, hist, backProject, &ranges, 1, true);
 
 	return backProject;
