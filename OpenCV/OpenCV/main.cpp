@@ -51,6 +51,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	//backProject(sign, yellow);
 
 	//backProjection(sign, yellow);
+	showImage("Sign", sign);
 	backProjection(yellow, sign);
 
 	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
@@ -199,7 +200,7 @@ void Hist_and_Backproj(int, void*) {
 	calcBackProject( &hue2, 1, 0, hist, backproj, &ranges, 1, true );
 
 	/// Draw the backproj
-	imshow( "BackProj", backproj );
+	showImage( "BackProj", backproj );
 
 	/// Draw the histogram
 	int w = 400; int h = 400;
