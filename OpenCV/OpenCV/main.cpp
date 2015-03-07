@@ -68,23 +68,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
 	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
 
-	backProject(busStops[6], templates[4]);
-
 	for (int i = 0; i < numberOfTestImages; i++) {
 		cout << "Processing image " << (i + 1) << endl;
-		findSign(busStops[i]);
+		showImage("Sign", busStops[i]);
+		Mat hsvSign = findSign(busStops[i]);
+		Mat binary = binaryImage(busStops[i]);
+		MatND backProjSign = backProjection(busStops[i], templates[4]);
+		Mat templateMatch;
 		if (i == 0 || i == 1) {
 			// templates[0] or templates[1]
-
+			templateMatch = templateMatching(busStops[i], templates[0]);
 
 		}
 		else {
 			// templates[2] or templates[3]
-
+			templateMatch = templateMatching(busStops[i], templates[2]);
 
 		}
+
+		showImage("HSV", hsvSign);
+		showImage("Binary", binary);
+		showImage("Back Projection", backProjSign);
+		showImage("Template Matching", templateMatch);
 		
-		showImage("Bus Stop", busStops[i]);
 		waitKey(0);
 	}*/
 
