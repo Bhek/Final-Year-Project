@@ -19,7 +19,7 @@ Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
 
 // "Number" function - used to detect the stop number from the sign
-void digitRecognition(Mat image);
+int digitRecognition(Mat image);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -207,8 +207,8 @@ Mat templateMatching(Mat image, Mat templateImage) {
 	return imageDisplay;
 }
 
-void digitRecognition(Mat image) {
+int digitRecognition(Mat image) {
 	// TODO: recognise numbers from sign
 
-	return;
+	return 0;
 }
