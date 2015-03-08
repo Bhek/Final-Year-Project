@@ -70,6 +70,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Template Matching", templateMatch);
 	waitKey(0);
 
+	int stopNumber = digitRecognition(backProjSign);
+
 	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
 	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
