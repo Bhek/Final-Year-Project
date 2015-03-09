@@ -212,6 +212,7 @@ Mat templateMatching(Mat image, Mat templateImage) {
 int digitRecognition(Mat image) {
 	// TODO: recognise numbers from sign
 	// Statistical Pattern Recognition
+	// Scene Text Recognition - OCRTesseract
 	// Template Matching
 	// Chamfer Matching
 	// Haar Classifiers
