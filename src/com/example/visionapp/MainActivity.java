@@ -93,22 +93,12 @@ public class MainActivity extends Activity {
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
 			mImageView.setImageBitmap(imageBitmap);
-			//Bitmap newImage = processImage(imageBitmap);
-			//mImageView.setImageBitmap(newImage);
 			
 			Intent intent = new Intent(getBaseContext(), ImageActivity.class);
 			intent.putExtra("image", imageBitmap);
 			startActivity(intent);
 		}
 	}
-	
-	/*protected Bitmap processImage(Bitmap bitmap) {
-		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
-		Utils.bitmapToMat(bitmap, image);
-		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HLS);
-		Utils.matToBitmap(image, bitmap);
-		return bitmap;
-	}*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,16 +106,12 @@ public class MainActivity extends Activity {
 
 		StrictMode.setThreadPolicy(policy);
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_main);
 		setContentView(R.layout.activity_main);
 
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-		/*File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		m = new Mat (bm.getWidth(), bm.getHeight(), CvType.CV_8UC1);*/
 	}
 	
 	@Override
