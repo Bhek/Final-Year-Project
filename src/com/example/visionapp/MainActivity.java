@@ -3,8 +3,10 @@ package com.example.visionapp;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -90,13 +92,18 @@ public class MainActivity extends Activity {
 			ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			mImageView.setImageBitmap(imageBitmap);
-			processImage(imageBitmap);
+			//mImageView.setImageBitmap(imageBitmap);
+			Bitmap newImage = processImage(imageBitmap);
+			mImageView.setImageBitmap(newImage);
 		}
 	}
 	
-	protected void processImage(Bitmap bitmap) {
+	protected Bitmap processImage(Bitmap bitmap) {
 		m = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
+		Utils.bitmapToMat(bitmap, m);
+		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2HLS);
+		Utils.matToBitmap(m, bitmap);
+		return bitmap;
 	}
 
 	@Override
