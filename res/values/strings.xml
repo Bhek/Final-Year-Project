@@ -9,5 +9,7 @@
     <string name="back">Back</string>
     <string name="title_activity_results">ResultsActivity</string>
     <string name="take_picture">Take Picture</string>
+    <string name="imgDesc">Camera Image</string>
+    <string name="quick">Quick Search - 37</string>
 
 </resources>
