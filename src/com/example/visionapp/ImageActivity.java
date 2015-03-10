@@ -1,7 +1,5 @@
 package com.example.visionapp;
 
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -11,7 +9,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;

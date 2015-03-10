@@ -3,10 +3,7 @@ package com.example.visionapp;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.app.Fragment;
