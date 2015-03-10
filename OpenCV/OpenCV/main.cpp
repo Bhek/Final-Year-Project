@@ -154,8 +154,8 @@ Mat backProjection(Mat image, Mat yellow) {
 
 	Mat hist;
 	int histSize = 180;
-	float hue_range[] = { 0, 180 };
-	const float* ranges = { hue_range };
+	float hueRange[] = { 0, 180 };
+	const float* ranges = { hueRange };
 
 	calcHist(&yellowHue, 1, 0, Mat(), hist, 1, &histSize, &ranges, true, false);
 	normalize(hist, hist, 0, 255, NORM_MINMAX, -1, Mat());
