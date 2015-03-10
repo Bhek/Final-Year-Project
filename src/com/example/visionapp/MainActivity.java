@@ -95,6 +95,10 @@ public class MainActivity extends Activity {
 			mImageView.setImageBitmap(imageBitmap);
 			//Bitmap newImage = processImage(imageBitmap);
 			//mImageView.setImageBitmap(newImage);
+			
+			Intent intent = new Intent(getBaseContext(), ImageActivity.class);
+			intent.putExtra("image", imageBitmap);
+			startActivity(intent);
 		}
 	}
 	

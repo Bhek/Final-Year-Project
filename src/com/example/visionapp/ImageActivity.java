@@ -1,17 +1,27 @@
 package com.example.visionapp;
 
+import org.opencv.android.BaseLoaderCallback;
+import org.opencv.android.LoaderCallbackInterface;
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ImageView;
 
 public class ImageActivity extends Activity {
+	Mat image = new Mat();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +32,32 @@ public class ImageActivity extends Activity {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+	}
+	
+	protected void onResume() {
+        super.onResume();
+        try {
+			processImage();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    } 
+	
+	public void processImage() throws Exception {
+		Bitmap bitmap = null;
+		
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
+		}
+		
+		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
+		Utils.bitmapToMat(bitmap, image);
+		Imgproc.cvtColor(image, image, Imgproc.COLOR_RGB2HLS);
+		Utils.matToBitmap(image, bitmap);
+		
+		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
+		mImageView.setImageBitmap(bitmap);
 	}
 
 	@Override
