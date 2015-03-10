@@ -31,7 +31,7 @@ import android.widget.ImageView;
 public class MainActivity extends Activity {
 	static final int REQUEST_IMAGE_CAPTURE = 1;
 	static Uri uri;
-	Mat m;
+	Mat image, yellow;
 	
 	private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
                 case LoaderCallbackInterface.SUCCESS:
                 {
                     Log.i("OCVSample::Activity", "OpenCV loaded successfully");
-                    m = new Mat();
+                    image = new Mat();
                 } break;
                 default:
                 {
@@ -99,10 +99,10 @@ public class MainActivity extends Activity {
 	}
 	
 	protected Bitmap processImage(Bitmap bitmap) {
-		m = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
-		Utils.bitmapToMat(bitmap, m);
-		Imgproc.cvtColor(m, m, Imgproc.COLOR_RGB2HLS);
-		Utils.matToBitmap(m, bitmap);
+		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
+		Utils.bitmapToMat(bitmap, image);
+		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HLS);
+		Utils.matToBitmap(image, bitmap);
 		return bitmap;
 	}
 
