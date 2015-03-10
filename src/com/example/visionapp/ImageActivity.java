@@ -59,6 +59,10 @@ public class ImageActivity extends Activity {
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 		mImageView.setImageBitmap(bitmap);
 	}
+ 	
+ 	public void goBack(View view) {
+ 		finish();
+ 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
