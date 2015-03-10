@@ -92,19 +92,19 @@ public class MainActivity extends Activity {
 			ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			//mImageView.setImageBitmap(imageBitmap);
-			Bitmap newImage = processImage(imageBitmap);
-			mImageView.setImageBitmap(newImage);
+			mImageView.setImageBitmap(imageBitmap);
+			//Bitmap newImage = processImage(imageBitmap);
+			//mImageView.setImageBitmap(newImage);
 		}
 	}
 	
-	protected Bitmap processImage(Bitmap bitmap) {
+	/*protected Bitmap processImage(Bitmap bitmap) {
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
 		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HLS);
 		Utils.matToBitmap(image, bitmap);
 		return bitmap;
-	}
+	}*/
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
