@@ -11,5 +11,6 @@
     <string name="take_picture">Take Picture</string>
     <string name="imgDesc">Camera Image</string>
     <string name="quick">Quick Search - 37</string>
+    <string name="title_activity_image">ImageActivity</string>
 
 </resources>
