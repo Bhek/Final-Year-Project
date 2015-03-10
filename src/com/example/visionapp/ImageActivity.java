@@ -1,13 +1,19 @@
 package com.example.visionapp;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfFloat;
+import org.opencv.core.MatOfInt;
 import org.opencv.imgproc.Imgproc;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,7 +23,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class ImageActivity extends Activity {
-	Mat image = new Mat();
+	Mat image, yellow, hist;
 	
 
 	@Override
@@ -48,13 +54,35 @@ public class ImageActivity extends Activity {
 			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
 		}
 		
+		/*File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
+		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
+		m = new Mat (bm.getWidth(), bm.getHeight(), CvType.CV_8UC1);*/
+		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		Imgproc.cvtColor(image, image, Imgproc.COLOR_RGB2HLS);
+		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY);
 		Utils.matToBitmap(image, bitmap);
+		
+		backProject();
 		
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 		mImageView.setImageBitmap(bitmap);
+	}
+	
+	private void backProject() {
+		File yellowFile = new File("/storage/sdcard0/FYP/yellow.png");
+		Bitmap yellowBitmap = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
+		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
+		Utils.bitmapToMat(yellowBitmap, yellow);
+		
+		ArrayList<Mat> list = new ArrayList<Mat>();
+        list.add(yellow);
+        MatOfInt channels = new MatOfInt(0);
+        Mat hist= new Mat();
+        MatOfInt histSize = new MatOfInt(25);
+        MatOfFloat ranges = new MatOfFloat(0, 180);
+        
+        Imgproc.calcHist(list, channels, new Mat(), hist, histSize, ranges);
 	}
  	
  	public void goBack(View view) {
