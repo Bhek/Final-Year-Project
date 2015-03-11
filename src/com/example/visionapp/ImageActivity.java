@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
@@ -60,11 +61,10 @@ public class ImageActivity extends Activity {
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2GRAY);
-		Utils.matToBitmap(image, bitmap);
-		
 		backProject();
-		
+		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
+		Utils.matToBitmap(image, bitmap);
+				
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 		mImageView.setImageBitmap(bitmap);
 	}
@@ -75,14 +75,25 @@ public class ImageActivity extends Activity {
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
 		
-		ArrayList<Mat> list = new ArrayList<Mat>();
-        list.add(yellow);
-        MatOfInt channels = new MatOfInt(0);
+		ArrayList<Mat> imageList = new ArrayList<Mat>();
+        Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
+		imageList.add(image);
+        MatOfInt ch = new MatOfInt(0);
+		//Core.mixChannels(imageList, imageList, ch);
+		
+		ArrayList<Mat> yellowList = new ArrayList<Mat>();
+        Imgproc.cvtColor(yellow, yellow, Imgproc.COLOR_BGR2HSV);
+        yellowList.add(yellow);
+		//Core.mixChannels(yellowList, yellowList, ch);
+		
+		MatOfInt channels = new MatOfInt(0);
         Mat hist= new Mat();
         MatOfInt histSize = new MatOfInt(25);
         MatOfFloat ranges = new MatOfFloat(0, 180);
         
-        Imgproc.calcHist(list, channels, new Mat(), hist, histSize, ranges);
+        Imgproc.calcHist(yellowList, channels, new Mat(), hist, histSize, ranges);
+        
+        Imgproc.calcBackProject(imageList, channels, hist, image, ranges, 1);
 	}
  	
  	public void goBack(View view) {
