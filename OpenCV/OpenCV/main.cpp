@@ -71,8 +71,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	waitKey(0);*/
 
 	Mat backProjSign = backProjection(sign, yellow);
-	showImage("Back Projection", backProjSign);
-	waitKey(0);
+	//showImage("Back Projection", backProjSign);
+	//waitKey(0);
 
 	int stopNumber = digitRecognition(backProjSign);
 
@@ -220,6 +220,9 @@ int digitRecognition(Mat image) {
 	// Template Matching
 	// Chamfer Matching
 	// Haar Classifiers
+
+	showImage("Sign", image);
+	waitKey(0);
 
 	return 0;
 }
