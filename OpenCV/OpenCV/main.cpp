@@ -58,7 +58,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
 	showImage("Bus Stop Sign", sign);
-	Mat hsvSign = findSign(sign);
+	/*Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
 	Mat backProjSign = backProjection(sign, yellow);
 	//Mat templateMatch = templateMatching(sign, templateSign);
@@ -68,6 +68,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Binary", binary);
 	showImage("Back Projection", backProjSign);
 	showImage("Template Matching", templateMatch);
+	waitKey(0);*/
+
+	Mat backProjSign = backProjection(sign, yellow);
+	showImage("Back Projection", backProjSign);
 	waitKey(0);
 
 	int stopNumber = digitRecognition(backProjSign);
