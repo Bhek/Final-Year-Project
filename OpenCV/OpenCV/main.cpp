@@ -4,12 +4,12 @@
 #include "stdafx.h"
 #include "Utilities.h"
 
-#include <tesseract\baseapi.h>
+//#include <tesseract\baseapi.h>
 //#include <leptonica\allheaders.h>
 
 using namespace std;
 using namespace cv;
-using namespace tesseract;
+//using namespace tesseract;
 
 // Functions to load in a single image or all images
 Mat loadImage(char* location, char* file);
@@ -65,6 +65,14 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
 	showImage("Bus Stop Sign", sign);
+	Mat backProjSign = backProjection(sign, yellow);
+
+	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+	showImage("Back Projection", backProjSign);
+	waitKey(0);
+
 	/*Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
 	Mat backProjSign = backProjection(sign, yellow);
@@ -77,18 +85,18 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Template Matching", templateMatch);
 	waitKey(0);*/
 
-	Mat backProjSign = backProjection(sign, yellow);
+	//Mat backProjSign = backProjection(sign, yellow);
 	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(15, 15)));
 	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(15, 15)));*/
 
 	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(7, 7)));
 	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(7, 7)));*/
 
-	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
 	showImage("Back Projection", backProjSign);
-	waitKey(0);
+	waitKey(0);*/
 
 	//int stopNumber = digitRecognition(backProjSign);
 
@@ -242,6 +250,8 @@ int digitRecognition(Mat image) {
 	tess.SetVariable("tessedit_char_whitelist", "0123456789");
 	tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
 	tess.SetImage((uchar*)image.data, image.cols, image.rows, 1, image.cols);*/
+
+
 
 	showImage("Sign", image);
 	waitKey(0);
