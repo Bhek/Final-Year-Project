@@ -4,6 +4,13 @@
 #include "stdafx.h"
 #include "Utilities.h"
 
+#include <tesseract\baseapi.h>
+//#include <leptonica\allheaders.h>
+
+using namespace std;
+using namespace cv;
+using namespace tesseract;
+
 // Functions to load in a single image or all images
 Mat loadImage(char* location, char* file);
 Mat* loadImages(int numberOfImages, char* location, char** files);
@@ -24,8 +31,8 @@ int digitRecognition(Mat image);
 int _tmain(int argc, _TCHAR* argv[])
 {
 	cout << "Using OpenCV " << CV_VERSION << endl;
-	char* testLocation = "Media/Test Images/";	// Location of bus stop sign images
-	
+	char* testLocation = "Media/Test Images/";  // Location of bus stop sign images
+
 	// Bus stop sign images
 	char* testFiles[] = {
 		"2809 a.jpg",
@@ -42,7 +49,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		"2839 d.jpg"
 	};
 
-	char* templateLocation = "Media/Templates/";	// Location of sample stop sign images
+	char* templateLocation = "Media/Templates/";    // Location of sample stop sign images
 
 	// Sample stop sign images
 	char* templateFiles[] = {
@@ -91,29 +98,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
 
 	for (int i = 0; i < numberOfTestImages; i++) {
-		cout << "Processing image " << (i + 1) << endl;
-		showImage("Sign", busStops[i]);
-		Mat hsvSign = findSign(busStops[i]);
-		Mat binary = binaryImage(busStops[i]);
-		Mat backProjSign = backProjection(busStops[i], templates[4]);
-		Mat templateMatch;
-		if (i == 0 || i == 1) {
-			// templates[0] or templates[1]
-			templateMatch = templateMatching(busStops[i], templates[0]);
+	cout << "Processing image " << (i + 1) << endl;
+	showImage("Sign", busStops[i]);
+	Mat hsvSign = findSign(busStops[i]);
+	Mat binary = binaryImage(busStops[i]);
+	Mat backProjSign = backProjection(busStops[i], templates[4]);
+	Mat templateMatch;
+	if (i == 0 || i == 1) {
+	// templates[0] or templates[1]
+	templateMatch = templateMatching(busStops[i], templates[0]);
 
-		}
-		else {
-			// templates[2] or templates[3]
-			templateMatch = templateMatching(busStops[i], templates[2]);
+	}
+	else {
+	// templates[2] or templates[3]
+	templateMatch = templateMatching(busStops[i], templates[2]);
 
-		}
+	}
 
-		showImage("HSV", hsvSign);
-		showImage("Binary", binary);
-		showImage("Back Projection", backProjSign);
-		showImage("Template Matching", templateMatch);
-		
-		waitKey(0);
+	showImage("HSV", hsvSign);
+	showImage("Binary", binary);
+	showImage("Back Projection", backProjSign);
+	showImage("Template Matching", templateMatch);
+
+	waitKey(0);
 	}*/
 
 	return 0;
@@ -229,6 +236,12 @@ int digitRecognition(Mat image) {
 	// Template Matching
 	// Chamfer Matching
 	// Haar Classifiers
+
+	//TessBaseAPI tess;
+	/*tess.Init(NULL, "eng", tesseract::OEM_DEFAULT);
+	tess.SetVariable("tessedit_char_whitelist", "0123456789");
+	tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
+	tess.SetImage((uchar*)image.data, image.cols, image.rows, 1, image.cols);*/
 
 	showImage("Sign", image);
 	waitKey(0);
