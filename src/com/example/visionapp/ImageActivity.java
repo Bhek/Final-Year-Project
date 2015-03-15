@@ -62,6 +62,11 @@ public class ImageActivity extends Activity {
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
 		backProject();
+		
+		digitRecognition();
+		
+		//TessBaseAPI baseApi = new TessBaseAPI();
+		
 		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
 		Utils.matToBitmap(image, bitmap);
 				
@@ -94,6 +99,10 @@ public class ImageActivity extends Activity {
         Imgproc.calcHist(yellowList, channels, new Mat(), hist, histSize, ranges);
         
         Imgproc.calcBackProject(imageList, channels, hist, image, ranges, 1);
+	}
+	
+	private void digitRecognition() {
+		
 	}
  	
  	public void goBack(View view) {
