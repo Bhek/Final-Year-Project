@@ -71,10 +71,19 @@ int _tmain(int argc, _TCHAR* argv[])
 	waitKey(0);*/
 
 	Mat backProjSign = backProjection(sign, yellow);
-	//showImage("Back Projection", backProjSign);
-	//waitKey(0);
+	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(15, 15)));
+	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(15, 15)));*/
 
-	int stopNumber = digitRecognition(backProjSign);
+	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(7, 7)));
+	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(7, 7)));*/
+
+	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+	showImage("Back Projection", backProjSign);
+	waitKey(0);
+
+	//int stopNumber = digitRecognition(backProjSign);
 
 	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
