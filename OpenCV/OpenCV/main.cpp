@@ -4,12 +4,12 @@
 #include "stdafx.h"
 #include "Utilities.h"
 
-//#include <tesseract\baseapi.h>
-//#include <leptonica\allheaders.h>
+#include <tesseract\baseapi.h>
+#include <leptonica\allheaders.h>
 
 using namespace std;
 using namespace cv;
-//using namespace tesseract;
+using namespace tesseract;
 
 // Functions to load in a single image or all images
 Mat loadImage(char* location, char* file);
@@ -26,7 +26,7 @@ Mat getHue(Mat image);
 Mat templateMatching(Mat image, Mat templateImage);
 
 // "Number" function - used to detect the stop number from the sign
-int digitRecognition(Mat image);
+int digitRecognition(Mat image, Mat* numbers);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -49,6 +49,21 @@ int _tmain(int argc, _TCHAR* argv[])
 		"2839 d.jpg"
 	};
 
+	char* numberLocation = "Media/Numbers/";
+
+	char* numberFiles[] = {
+		"0.png",
+		"1.png",
+		"2.png",
+		"3.png",
+		"4.png",
+		"5.png",
+		"6.png",
+		"7.png",
+		"8.png",
+		"9.png"
+	};
+
 	char* templateLocation = "Media/Templates/";    // Location of sample stop sign images
 
 	// Sample stop sign images
@@ -60,6 +75,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		"yellow.png"
 	};
 
+	int numberOfNumbers = sizeof(numberFiles) / sizeof(numberFiles[0]);
+	Mat* numbers = loadImages(numberOfNumbers, numberLocation, numberFiles);
+
 	Mat sign = loadImage(testLocation, testFiles[6]);
 	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
@@ -69,6 +87,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+
+	int stopNumber = digitRecognition(backProjSign, numbers);
 
 	showImage("Back Projection", backProjSign);
 	waitKey(0);
