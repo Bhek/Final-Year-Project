@@ -257,7 +257,7 @@ Mat templateMatching(Mat image, Mat templateImage) {
 	return imageDisplay;
 }
 
-int digitRecognition(Mat image) {
+int digitRecognition(Mat image, Mat* numbers) {
 	// TODO: recognise numbers from sign
 	// Statistical Pattern Recognition
 	// Scene Text Recognition - OCRTesseract
