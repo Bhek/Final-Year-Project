@@ -19,5 +19,10 @@ Requirements for installing Android app:
 
 Requirements for running the VS solution are:
 * OpenCV
+ * [Home Page](http://opencv.org/)
+ * [Download Page](http://opencv.org/downloads.html)
 * Tesseract
+ * [Home Page](https://code.google.com/p/tesseract-ocr/)
+ * [Download Page](https://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-ocr-setup-3.02.02.exe&can=2&q=)
 * Leptonica
+ * *N/A* 
