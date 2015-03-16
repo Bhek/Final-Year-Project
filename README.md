@@ -9,9 +9,11 @@ This is an android app using OpenCV for my Final Year Project
 
 Requirements for installing Android app:
 * OpenCV manager
- * will be prompted to install this on first running the app
+ * Will be prompted to install this on first running the app.
 * ~~Tesseract~~
+ * Not required yet.
 * ~~Leptonica~~
+ * Not required yet.
 
 ### Visual Studio
 
