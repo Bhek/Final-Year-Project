@@ -6,7 +6,12 @@ This is an android app using OpenCV for my Final Year Project
 
 ### Android
 
-It is necessary for you to install 'OpenCV Manager' to your android phone. If this isn't installed, you will be prompted to go to the Play store and install.
+
+Requirements for installing Android app:
+* OpenCV manager
+ * will be prompted to install this on first running the app
+* ~~Tesseract~~
+* ~~Leptonica~~
 
 ### Visual Studio
 
