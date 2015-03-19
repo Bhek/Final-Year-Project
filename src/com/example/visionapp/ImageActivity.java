@@ -64,9 +64,10 @@ public class ImageActivity extends Activity {
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		/*backProject();
+		backProject();
+		Utils.matToBitmap(image, bitmap);
 		
-		digitRecognition();*/
+		/*digitRecognition();
 		
 		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
 		Bitmap bm = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
@@ -74,7 +75,7 @@ public class ImageActivity extends Activity {
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText("bloop");
 
-		System.out.println("Okay");
+		System.out.println("Okay");*/
 		
 		TessBaseAPI baseApi = new TessBaseAPI();
 		// DATA_PATH = Path to the storage
@@ -82,20 +83,17 @@ public class ImageActivity extends Activity {
 		baseApi.init("/storage/sdcard0/FYP/", "eng");
 		//baseApi.init("/storage/sdcard0/FYP/scratchcard.png", "eng");
 		// Eg. baseApi.init("/mnt/sdcard/tesseract/tessdata/eng.traineddata", "eng");
-		baseApi.setImage(bm);
+		baseApi.setImage(bitmap);
 		String recognizedText = baseApi.getUTF8Text();
 		baseApi.end();
 		
-		System.out.println("anything?");
-		System.out.println(recognizedText);
-		
 		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
-		Utils.matToBitmap(image, bitmap);
+		//Utils.matToBitmap(image, bitmap);
 				
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(bm);
+		mImageView.setImageBitmap(bitmap);
 		
-		
+		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(recognizedText);
 	}
 	
