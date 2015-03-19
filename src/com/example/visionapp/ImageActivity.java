@@ -11,6 +11,8 @@ import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.imgproc.Imgproc;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Bitmap;
@@ -22,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class ImageActivity extends Activity {
 	Mat image, yellow, hist;
@@ -61,17 +64,39 @@ public class ImageActivity extends Activity {
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		backProject();
+		/*backProject();
 		
-		digitRecognition();
+		digitRecognition();*/
 		
-		//TessBaseAPI baseApi = new TessBaseAPI();
+		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
+		Bitmap bm = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
+		
+		TextView tv = (TextView) findViewById(R.id.textView1);
+		tv.setText("bloop");
+
+		System.out.println("Okay");
+		
+		TessBaseAPI baseApi = new TessBaseAPI();
+		// DATA_PATH = Path to the storage
+		// lang = for which the language data exists, usually "eng"
+		baseApi.init("/storage/sdcard0/FYP/", "eng");
+		//baseApi.init("/storage/sdcard0/FYP/scratchcard.png", "eng");
+		// Eg. baseApi.init("/mnt/sdcard/tesseract/tessdata/eng.traineddata", "eng");
+		baseApi.setImage(bm);
+		String recognizedText = baseApi.getUTF8Text();
+		baseApi.end();
+		
+		System.out.println("anything?");
+		System.out.println(recognizedText);
 		
 		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
 		Utils.matToBitmap(image, bitmap);
 				
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(bitmap);
+		mImageView.setImageBitmap(bm);
+		
+		
+		tv.setText(recognizedText);
 	}
 	
 	private void backProject() {
