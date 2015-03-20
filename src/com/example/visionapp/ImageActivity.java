@@ -109,6 +109,7 @@ public class ImageActivity extends Activity {
 	private String digitRecognition(Bitmap bitmap) {
 		TessBaseAPI tess = new TessBaseAPI();
 		tess.init("/storage/sdcard0/FYP/", "eng");
+		tess.setVariable("tessedit_char_whitelist", "0123456789");
 		tess.setImage(bitmap);
 		String stopNumber = tess.getUTF8Text();
 		tess.end();
