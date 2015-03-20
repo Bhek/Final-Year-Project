@@ -67,25 +67,13 @@ public class ImageActivity extends Activity {
 		backProject();
 		Utils.matToBitmap(image, bitmap);
 		
-		String stopNumber = digitRecognition(bitmap);
-		
-		/*digitRecognition();
-		
 		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
 		Bitmap bm = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
 		
-		TextView tv = (TextView) findViewById(R.id.textView1);
-		tv.setText("bloop");
-
-		System.out.println("Okay");*/
+		String stopNumber = digitRecognition(bitmap);
 		
-		
-		
-		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
-		//Utils.matToBitmap(image, bitmap);
-				
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(bitmap);
+		mImageView.setImageBitmap(bm);
 		
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(stopNumber);
