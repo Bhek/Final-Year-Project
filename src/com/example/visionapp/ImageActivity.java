@@ -70,7 +70,7 @@ public class ImageActivity extends Activity {
 		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
 		Bitmap bm = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
 		
-		String stopNumber = digitRecognition(bitmap);
+		String stopNumber = digitRecognition(bm);
 		
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 		mImageView.setImageBitmap(bm);
