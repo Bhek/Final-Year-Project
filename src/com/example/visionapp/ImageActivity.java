@@ -107,11 +107,11 @@ public class ImageActivity extends Activity {
 	}
 	
 	private String digitRecognition(Bitmap bitmap) {
-		TessBaseAPI baseApi = new TessBaseAPI();
-		baseApi.init("/storage/sdcard0/FYP/", "eng");
-		baseApi.setImage(bitmap);
-		String stopNumber = baseApi.getUTF8Text();
-		baseApi.end();
+		TessBaseAPI tess = new TessBaseAPI();
+		tess.init("/storage/sdcard0/FYP/", "eng");
+		tess.setImage(bitmap);
+		String stopNumber = tess.getUTF8Text();
+		tess.end();
 		
 		return stopNumber;
 	}
