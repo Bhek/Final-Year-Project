@@ -67,6 +67,8 @@ public class ImageActivity extends Activity {
 		backProject();
 		Utils.matToBitmap(image, bitmap);
 		
+		String stopNumber = digitRecognition(bitmap);
+		
 		/*digitRecognition();
 		
 		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
@@ -77,15 +79,7 @@ public class ImageActivity extends Activity {
 
 		System.out.println("Okay");*/
 		
-		TessBaseAPI baseApi = new TessBaseAPI();
-		// DATA_PATH = Path to the storage
-		// lang = for which the language data exists, usually "eng"
-		baseApi.init("/storage/sdcard0/FYP/", "eng");
-		//baseApi.init("/storage/sdcard0/FYP/scratchcard.png", "eng");
-		// Eg. baseApi.init("/mnt/sdcard/tesseract/tessdata/eng.traineddata", "eng");
-		baseApi.setImage(bitmap);
-		String recognizedText = baseApi.getUTF8Text();
-		baseApi.end();
+		
 		
 		//Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
 		//Utils.matToBitmap(image, bitmap);
@@ -94,7 +88,7 @@ public class ImageActivity extends Activity {
 		mImageView.setImageBitmap(bitmap);
 		
 		TextView tv = (TextView) findViewById(R.id.textView1);
-		tv.setText(recognizedText);
+		tv.setText(stopNumber);
 	}
 	
 	private void backProject() {
@@ -124,8 +118,14 @@ public class ImageActivity extends Activity {
         Imgproc.calcBackProject(imageList, channels, hist, image, ranges, 1);
 	}
 	
-	private void digitRecognition() {
+	private String digitRecognition(Bitmap bitmap) {
+		TessBaseAPI baseApi = new TessBaseAPI();
+		baseApi.init("/storage/sdcard0/FYP/", "eng");
+		baseApi.setImage(bitmap);
+		String stopNumber = baseApi.getUTF8Text();
+		baseApi.end();
 		
+		return stopNumber;
 	}
  	
  	public void goBack(View view) {
