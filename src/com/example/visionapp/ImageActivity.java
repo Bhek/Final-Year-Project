@@ -1,12 +1,11 @@
 package com.example.visionapp;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.opencv.android.Utils;
-import org.opencv.core.Core;
+//import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
@@ -93,7 +92,7 @@ public class ImageActivity extends Activity {
 		ArrayList<Mat> imageList = new ArrayList<Mat>();
         Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
 		imageList.add(image);
-        MatOfInt ch = new MatOfInt(0);
+        //MatOfInt ch = new MatOfInt(0);
 		//Core.mixChannels(imageList, imageList, ch);
 		
 		ArrayList<Mat> yellowList = new ArrayList<Mat>();
