@@ -1,7 +1,10 @@
 package com.example.visionapp;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 import org.opencv.android.Utils;
@@ -20,6 +23,8 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,9 +36,53 @@ import android.widget.TextView;
 public class ImageActivity extends Activity {
 	Mat image, yellow, hist;
 	
+	public static final String DATA_PATH = Environment.getExternalStorageDirectory().toString() + "/VisionBusApp/";
+	
+	public static final String lang = "eng";
+	
+	private static final String TAG = "ImageActivity.java";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		String[] paths = new String[] {DATA_PATH, DATA_PATH + "tessdata/"};
+		
+		for (String path: paths) {
+			File dir = new File(path);
+			if (!dir.exists()) {
+				if (!dir.mkdirs()) {
+					Log.v(TAG, "ERROR: Creation of directory " + path + " on sdcard failed");
+					return;
+				}
+				else {
+					Log.v(TAG, "Created directory " + path + " on sdcard");
+				}
+			}
+		}
+		
+		if (!(new File(DATA_PATH + "tessdata/" + lang + ".traineddata")).exists()) {
+			try {
+				AssetManager am = getResources().getAssets();
+				InputStream is = am.open("tessdata/" + lang + ".traineddata");
+				
+				OutputStream os = new FileOutputStream(DATA_PATH + "tessData/" + lang + ".traineddata");
+				
+				byte[] buf = new byte[1024];
+				int len;
+				
+				while ((len = is.read(buf)) > 0) {
+					os.write(buf, 0, len);
+				}
+				
+				is.close();
+				os.close();
+				
+				Log.v(TAG, "Copied " + lang + ".traineddata");
+			} catch (IOException e) {
+				Log.v(TAG, "Was unable to copy eng.traineddata " + e.toString());
+			}
+		}
+		
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image);
 
@@ -108,7 +157,8 @@ public class ImageActivity extends Activity {
 	
 	private String digitRecognition(Bitmap bitmap) {
 		TessBaseAPI tess = new TessBaseAPI();
-		tess.init("/storage/sdcard0/FYP/", "eng");
+		//tess.init("/storage/sdcard0/FYP/", "eng");
+		tess.init(DATA_PATH, lang);
 		tess.setVariable("tessedit_char_whitelist", "0123456789");
 		tess.setImage(bitmap);
 		String stopNumber = tess.getUTF8Text();
