@@ -1,6 +1,8 @@
 package com.example.visionapp;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import org.opencv.android.Utils;
@@ -15,6 +17,7 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -67,8 +70,9 @@ public class ImageActivity extends Activity {
 		backProject();
 		Utils.matToBitmap(image, bitmap);
 		
-		File yellowFile = new File("/storage/sdcard0/FYP/scratchcard.png");
-		Bitmap bm = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
+		AssetManager am = getResources().getAssets();
+		InputStream is = am.open("scratchcard.png");
+		Bitmap bm = BitmapFactory.decodeStream(is);
 		
 		String stopNumber = digitRecognition(bm);
 		
@@ -79,9 +83,10 @@ public class ImageActivity extends Activity {
 		tv.setText(stopNumber);
 	}
 	
-	private void backProject() {
-		File yellowFile = new File("/storage/sdcard0/FYP/yellow.png");
-		Bitmap yellowBitmap = BitmapFactory.decodeFile(yellowFile.getAbsolutePath());
+	private void backProject() throws IOException {
+		AssetManager am = getResources().getAssets();
+		InputStream is = am.open("scratchcard.png");
+		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
 		
