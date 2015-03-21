@@ -46,7 +46,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		"2839 a.jpg",
 		"2839 b.jpg",
 		"2839 c.jpg",
-		"2839 d.jpg"
+		"2839 d.jpg",
+		"bus stop.png"
 	};
 
 	char* numberLocation = "Media/Numbers/";
@@ -78,7 +79,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int numberOfNumbers = sizeof(numberFiles) / sizeof(numberFiles[0]);
 	Mat* numbers = loadImages(numberOfNumbers, numberLocation, numberFiles);
 
-	Mat sign = loadImage(testLocation, testFiles[6]);
+	Mat sign = loadImage(testLocation, testFiles[12]);
 	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
@@ -88,7 +89,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
-	int stopNumber = digitRecognition(backProjSign, numbers);
+	//int stopNumber = digitRecognition(backProjSign, numbers);
 
 	showImage("Back Projection", backProjSign);
 	waitKey(0);
