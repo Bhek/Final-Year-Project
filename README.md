@@ -11,9 +11,7 @@ Requirements for installing Android app:
 * OpenCV manager
  * Will be prompted to install this on first running the app.
 * ~~Tesseract~~
- * Not required yet.
-* ~~Leptonica~~
- * Not required yet.
+ * Can be done by following [this](http://gaut.am/making-an-ocr-android-app-using-tesseract/) guide.
 
 ### Visual Studio
 
@@ -25,4 +23,4 @@ Requirements for running the VS solution are:
  * [Home Page](https://code.google.com/p/tesseract-ocr/)
  * [Download Page](https://code.google.com/p/tesseract-ocr/downloads/detail?name=tesseract-ocr-setup-3.02.02.exe&can=2&q=)
 * Leptonica
- * *N/A* 
+ * *Gets downloaded with Tesseract.* 
