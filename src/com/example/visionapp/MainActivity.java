@@ -70,7 +70,6 @@ public class MainActivity extends Activity {
     }
     
     public void quickSearch(View view) throws Exception {
-    	System.out.println("Go go go go!");
     	String stopNumber = "37";
     	Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
 		intent.putExtra("rtpi stop", stopNumber);
@@ -78,7 +77,6 @@ public class MainActivity extends Activity {
     }
     
     public void takePicture(View view) throws Exception {
-    	System.out.println("Go go go go!");
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     	if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
     		startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
