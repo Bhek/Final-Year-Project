@@ -86,8 +86,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Bus Stop Sign", sign);
 	Mat backProjSign = backProjection(sign, yellow);
 
-	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	/*erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));*/
 
 	//int stopNumber = digitRecognition(backProjSign, numbers);
 
@@ -138,39 +138,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	}*/
 
 	return 0;
-}
-
-void multipleFiles() {
-	int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
-	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
-	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
-	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
-
-	for (int i = 0; i < numberOfTestImages; i++) {
-		cout << "Processing image " << (i + 1) << endl;
-		showImage("Sign", busStops[i]);
-		Mat hsvSign = findSign(busStops[i]);
-		Mat binary = binaryImage(busStops[i]);
-		Mat backProjSign = backProjection(busStops[i], templates[4]);
-		Mat templateMatch;
-		if (i == 0 || i == 1) {
-			// templates[0] or templates[1]
-			templateMatch = templateMatching(busStops[i], templates[0]);
-
-		}
-		else {
-			// templates[2] or templates[3]
-			templateMatch = templateMatching(busStops[i], templates[2]);
-
-		}
-
-		showImage("HSV", hsvSign);
-		showImage("Binary", binary);
-		showImage("Back Projection", backProjSign);
-		showImage("Template Matching", templateMatch);
-
-		waitKey(0);
-	}
 }
 
 Mat loadImage(char* location, char* file) {
