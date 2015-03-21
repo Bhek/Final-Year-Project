@@ -60,10 +60,6 @@ public class ImageActivity extends Activity {
 			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
 		}
 		
-		/*File picture = new File ("/storage/sdcard0/DCIM/image.jpg");
-		Bitmap bm = BitmapFactory.decodeFile(picture.getAbsolutePath());
-		m = new Mat (bm.getWidth(), bm.getHeight(), CvType.CV_8UC1);*/
-		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
 		backProject();
