@@ -51,6 +51,8 @@ public class ResultsActivity extends Activity {
 			stopNumber = extras.getString("rtpi stop");
 		}
 		System.out.println(stopNumber);
+		
+		// TODO: check if internet connection is available
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
