@@ -108,13 +108,11 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 
 	/*Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
-	Mat backProjSign = backProjection(sign, yellow);
 	//Mat templateMatch = templateMatching(sign, templateSign);
 	Mat templateMatch = templateMatching(sign, yellow);
 
 	showImage("HSV", hsvSign);
 	showImage("Binary", binary);
-	showImage("Back Projection", backProjSign);
 	showImage("Template Matching", templateMatch);
 	waitKey(0);*/
 }
