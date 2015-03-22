@@ -98,8 +98,8 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 	showImage("Bus Stop Sign", sign);
 	Mat backProjSign = backProjection(sign, yellow);
 
-	erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
-	dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	//erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
+	//dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
 	//int stopNumber = digitRecognition(backProjSign, numbers);
 
