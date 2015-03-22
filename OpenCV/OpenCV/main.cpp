@@ -95,16 +95,45 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
 	Mat yellow = loadImage(templateLocation, templateFiles[4]);
 
-	showImage("Bus Stop Sign", sign);
+	//showImage("Bus Stop Sign", sign);
 	Mat backProjSign = backProjection(sign, yellow);
+
+	// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	Mat im2;
+	backProjSign.convertTo(im2, CV_8U);
+
+	vector<vector<Point>> contours;
+	findContours(im2, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+
+	double maxArea = 0;
+	int maxIdX = 0;
+	for (int i = 0; i < contours.size(); i++) {
+		double area = contourArea(contours[i]);
+		maxIdX = area > maxArea ? i : maxIdX;
+		maxArea = area > maxArea ? area : maxArea;
+	}
+
+	im2.setTo(Scalar(0));
+	drawContours(im2, contours, maxIdX, Scalar(255), -1);
+
+	Mat im3;
+	cvtColor(sign, im3, CV_BGR2GRAY);
+	im3 = ((255 - im3) & im2) > 200;
+
+	showImage("sign", sign);
+	showImage("test", im3);
+	waitKey(0);
+
+	// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 	//erode(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 	//dilate(backProjSign, backProjSign, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)));
 
 	//int stopNumber = digitRecognition(backProjSign, numbers);
 
-	showImage("Back Projection", backProjSign);
-	waitKey(0);
+	//showImage("Back Projection", backProjSign);
+	//waitKey(0);
 
 	/*Mat hsvSign = findSign(sign);
 	Mat binary = binaryImage(sign);
