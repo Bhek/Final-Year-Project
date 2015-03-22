@@ -43,6 +43,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		"2809 b.jpg",
 		"2830 a.jpg",
 		"2830 b.jpg",
+		"2831 a.jpg",
+		"2831 b.jpg",
+		"2832.jpg",
 		"2838 a.jpg",
 		"2838 b.jpg",
 		"2838 c.jpg",
@@ -77,7 +80,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		"stop&no.png",
 		"stop2.png",
 		"stop&no2.png",
-		"yellow.png"
+		"yellow.png",
+		"yellow.jpg",
+		"yellow 2.jpg"
 	};
 
 	processSingleImage(testLocation, testFiles, templateLocation, templateFiles);
@@ -91,9 +96,9 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 	/*int numberOfNumbers = sizeof(numberFiles) / sizeof(numberFiles[0]);
 	Mat* numbers = loadImages(numberOfNumbers, numberLocation, numberFiles);*/
 
-	Mat sign = loadImage(testLocation, testFiles[12]);
+	Mat sign = loadImage(testLocation, testFiles[6]);
 	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
-	Mat yellow = loadImage(templateLocation, templateFiles[4]);
+	Mat yellow = loadImage(templateLocation, templateFiles[5]);
 
 	//showImage("Bus Stop Sign", sign);
 	Mat backProjSign = backProjection(sign, yellow);
@@ -121,8 +126,11 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 	cvtColor(sign, im3, CV_BGR2GRAY);
 	im3 = ((255 - im3) & im2) > 200;
 
+	imshow("yellow", yellow);
 	showImage("sign", sign);
-	showImage("test", im3);
+	showImage("Back project", backProjSign);
+	showImage("im2", im2);
+	showImage("im3", im3);
 	waitKey(0);
 
 	// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
