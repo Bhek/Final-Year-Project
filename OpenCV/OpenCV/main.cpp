@@ -27,6 +27,7 @@ Mat findSign(Mat image);
 Mat binaryImage(Mat image);
 Mat backProjection(Mat image, Mat yellow);
 Mat getHue(Mat image);
+Mat imageProcessing(Mat sign, Mat yellow);
 Mat templateMatching(Mat image, Mat templateImage);
 
 // "Number" function - used to detect the stop number from the sign
@@ -101,9 +102,9 @@ void processSingleImage(char* testLocation, char* testFiles[], char* templateLoc
 	Mat yellow = loadImage(templateLocation, templateFiles[5]);
 
 	//showImage("Bus Stop Sign", sign);
-	Mat backProjSign = backProjection(sign, yellow);
+	//Mat backProjSign = backProjection(sign, yellow);
 
-	// ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Mat backProjSign = imageProcessing(sign, yellow);
 
 	Mat im2;
 	backProjSign.convertTo(im2, CV_8U);
@@ -256,6 +257,40 @@ Mat getHue(Mat image) {
 	mixChannels(&hsv, 1, &hue, 1, ch, 1);
 
 	return hue;
+}
+
+Mat imageProcessing(Mat sign, Mat yellow) {
+	Mat backProjSign = backProjection(sign, yellow);
+
+	Mat im2;
+	backProjSign.convertTo(im2, CV_8U);
+
+	vector<vector<Point>> contours;
+	findContours(im2, contours, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
+
+	double maxArea = 0;
+	int maxIdX = 0;
+	for (int i = 0; i < contours.size(); i++) {
+		double area = contourArea(contours[i]);
+		maxIdX = area > maxArea ? i : maxIdX;
+		maxArea = area > maxArea ? area : maxArea;
+	}
+
+	im2.setTo(Scalar(0));
+	drawContours(im2, contours, maxIdX, Scalar(255), -1);
+
+	Mat im3;
+	cvtColor(sign, im3, CV_BGR2GRAY);
+	im3 = ((255 - im3) & im2) > 200;
+
+	imshow("yellow", yellow);
+	showImage("sign", sign);
+	showImage("Back project", backProjSign);
+	showImage("im2", im2);
+	showImage("im3", im3);
+	waitKey(0);
+
+	return im3;
 }
 
 Mat templateMatching(Mat image, Mat templateImage) {
