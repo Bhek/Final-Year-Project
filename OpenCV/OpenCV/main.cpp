@@ -11,6 +11,10 @@ using namespace std;
 using namespace cv;
 using namespace tesseract;
 
+// Functions for processing all images, or just one
+void processSingleImage(char* testLocation, char* testFiles[], char* templateLocation, char* templateFiles[]);
+void processMultipleImages(char* testLocation, char* testFiles[], char* templateLocation, char* templateFiles[]);
+
 // Functions to load in a single image or all images
 Mat loadImage(char* location, char* file);
 Mat* loadImages(int numberOfImages, char* location, char** files);
@@ -76,8 +80,16 @@ int _tmain(int argc, _TCHAR* argv[])
 		"yellow.png"
 	};
 
-	int numberOfNumbers = sizeof(numberFiles) / sizeof(numberFiles[0]);
-	Mat* numbers = loadImages(numberOfNumbers, numberLocation, numberFiles);
+	processSingleImage(testLocation, testFiles, templateLocation, templateFiles);
+
+	//processMultipleImages(testLocation, testFiles, templateLocation, templateFiles);
+
+	return 0;
+}
+
+void processSingleImage(char* testLocation, char* testFiles[], char* templateLocation, char* templateFiles[]) {
+	/*int numberOfNumbers = sizeof(numberFiles) / sizeof(numberFiles[0]);
+	Mat* numbers = loadImages(numberOfNumbers, numberLocation, numberFiles);*/
 
 	Mat sign = loadImage(testLocation, testFiles[12]);
 	Mat templateSign = loadImage(templateLocation, templateFiles[2]);
@@ -105,39 +117,39 @@ int _tmain(int argc, _TCHAR* argv[])
 	showImage("Back Projection", backProjSign);
 	showImage("Template Matching", templateMatch);
 	waitKey(0);*/
+}
 
-	/*int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
+void processMultipleImages(char* testLocation, char* testFiles[], char* templateLocation, char* templateFiles[]) {
+	int numberOfTestImages = sizeof(testFiles) / sizeof(testFiles[0]);
 	Mat* busStops = loadImages(numberOfTestImages, testLocation, testFiles);
 	int numberOfTemplateImages = sizeof(templateFiles) / sizeof(templateFiles[0]);
 	Mat* templates = loadImages(numberOfTemplateImages, templateLocation, templateFiles);
 
 	for (int i = 0; i < numberOfTestImages; i++) {
-	cout << "Processing image " << (i + 1) << endl;
-	showImage("Sign", busStops[i]);
-	Mat hsvSign = findSign(busStops[i]);
-	Mat binary = binaryImage(busStops[i]);
-	Mat backProjSign = backProjection(busStops[i], templates[4]);
-	Mat templateMatch;
-	if (i == 0 || i == 1) {
-	// templates[0] or templates[1]
-	templateMatch = templateMatching(busStops[i], templates[0]);
+		cout << "Processing image " << (i + 1) << endl;
+		showImage("Sign", busStops[i]);
+		Mat hsvSign = findSign(busStops[i]);
+		Mat binary = binaryImage(busStops[i]);
+		Mat backProjSign = backProjection(busStops[i], templates[4]);
+		Mat templateMatch;
+		if (i == 0 || i == 1) {
+			// templates[0] or templates[1]
+			templateMatch = templateMatching(busStops[i], templates[0]);
 
+		}
+		else {
+			// templates[2] or templates[3]
+			templateMatch = templateMatching(busStops[i], templates[2]);
+
+		}
+
+		showImage("HSV", hsvSign);
+		showImage("Binary", binary);
+		showImage("Back Projection", backProjSign);
+		showImage("Template Matching", templateMatch);
+
+		waitKey(0);
 	}
-	else {
-	// templates[2] or templates[3]
-	templateMatch = templateMatching(busStops[i], templates[2]);
-
-	}
-
-	showImage("HSV", hsvSign);
-	showImage("Binary", binary);
-	showImage("Back Projection", backProjSign);
-	showImage("Template Matching", templateMatch);
-
-	waitKey(0);
-	}*/
-
-	return 0;
 }
 
 Mat loadImage(char* location, char* file) {
