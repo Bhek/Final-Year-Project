@@ -168,6 +168,9 @@ public class ImageActivity extends Activity {
 		backProj.copyTo(image);
 		
 		Core.absdiff(backProj, im1, image);
+		
+		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));
 	}
 	
 	private Mat backProject() throws IOException {
