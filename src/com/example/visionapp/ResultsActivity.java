@@ -1,12 +1,21 @@
 package com.example.visionapp;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.ksoap2.SoapEnvelope;
+import org.ksoap2.serialization.PropertyInfo;
+import org.ksoap2.serialization.SoapObject;
+import org.ksoap2.serialization.SoapPrimitive;
+import org.ksoap2.serialization.SoapSerializationEnvelope;
+import org.ksoap2.transport.HttpResponseException;
+import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -53,6 +62,7 @@ public class ResultsActivity extends Activity {
 		System.out.println(stopNumber);
 		
 		// TODO: check if internet connection is available
+		//sendRequest(stopNumber);
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
@@ -67,9 +77,33 @@ public class ResultsActivity extends Activity {
 			
 			table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		}
-		
     }
     
+	private void sendRequest(String stopNumber) throws HttpResponseException, IOException, XmlPullParserException {
+		final String SOAP_ACTION = "http://tempuri.org/GetInteger2";
+		final String METHOD_NAME = "GetInteger2";
+		final String NAMESPACE = "http://tempuri.org/";
+		final String URL = "http://10.0.22:4711/Service1.asmx";
+		
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+	    PropertyInfo pi = new PropertyInfo();
+	    pi.name = "i";
+	    pi.type = PropertyInfo.INTEGER_CLASS;
+	    request.addProperty(pi, 123);
+
+	    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+	    envelope.dotNet = true;
+	    envelope.setOutputSoapObject(request);
+
+	    HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+	    androidHttpTransport.call(SOAP_ACTION, envelope);
+
+	    SoapPrimitive result = (SoapPrimitive)envelope.getResponse();
+	    int requestResult = Integer.parseInt(result.toString());
+	    System.out.println("SOAP response is " + requestResult);
+	}
+	
  	private Document sendGet(String stopNumber) throws Exception {
  		String url = "http://rtpi.ie/Text/WebDisplay.aspx?stopRef=" + ("00000" + stopNumber).substring(stopNumber.length());
   
