@@ -145,19 +145,14 @@ public class ImageActivity extends Activity {
 		Mat im2 = new Mat();
 		backProj.copyTo(im1);
 		backProj.copyTo(im2);
-		//image.convertTo(im2, CvType.CV_8U);
 		backProj.convertTo(im1, CvType.CV_8U);
 
-		//vector<vector<Point>> contours;
-		//Point[][] contours;
 		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-		//Imgproc.findContours(im2, contours, im2, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 		Imgproc.findContours(im1, contours, im2, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
 
 		double maxArea = 0;
 		int maxIdX = 0;
 		for (int i = 0; i < contours.size(); i++) {
-			//double area = contourArea(contours[i]);
 			double area = Imgproc.contourArea(contours.get(i));
 			maxIdX = area > maxArea ? i : maxIdX;
 			maxArea = area > maxArea ? area : maxArea;
