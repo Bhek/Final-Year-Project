@@ -37,6 +37,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,8 @@ public class ImageActivity extends Activity {
 	public static final String lang = "eng";
 	
 	private static final String TAG = "ImageActivity.java";
+	
+	private static String stopNumber;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -120,26 +123,19 @@ public class ImageActivity extends Activity {
 		InputStream in = asset.open("sign.jpg");
 		bitmap = BitmapFactory.decodeStream(in);
 		
-		Bitmap signBitmap = bitmap;
+		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
+		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
+		mImageView.setImageBitmap(signBitmap);
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
 		imageProcessing();
 		Utils.matToBitmap(image, bitmap);
 		
-		String stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
-		
-		
-				
-		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(signBitmap);
+		stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
 		
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(stopNumber);
-		
-		Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
-		intent.putExtra("rtpi stop", stopNumber);
-		startActivity(intent);
 	}
 	
 	private void imageProcessing() throws IOException {
@@ -224,6 +220,12 @@ public class ImageActivity extends Activity {
  	public void goBack(View view) {
  		finish();
  	}
+ 	
+ 	public void getRtpi(View view) throws Exception {
+    	Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
+		intent.putExtra("rtpi stop", stopNumber);
+		startActivity(intent);
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

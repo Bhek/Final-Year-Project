@@ -55,16 +55,16 @@ containing a value of this type.
         public static final int action_settings=0x7f04000c;
         public static final int any=0x7f040000;
         public static final int back=0x7f040001;
-        public static final int button1=0x7f04000a;
+        public static final int button1=0x7f040005;
         public static final int container=0x7f040003;
-        public static final int editText1=0x7f040007;
+        public static final int editText1=0x7f040008;
         public static final int front=0x7f040002;
         public static final int imageView1=0x7f040004;
-        public static final int search=0x7f040008;
-        public static final int stop=0x7f040006;
+        public static final int search=0x7f040009;
+        public static final int stop=0x7f040007;
         public static final int tableLayout1=0x7f04000b;
-        public static final int takepicture=0x7f040009;
-        public static final int textView1=0x7f040005;
+        public static final int takepicture=0x7f04000a;
+        public static final int textView1=0x7f040006;
     }
     public static final class layout {
         public static final int activity_image=0x7f030000;
