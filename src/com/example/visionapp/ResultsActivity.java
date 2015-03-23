@@ -9,6 +9,7 @@ import java.net.URL;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.ksoap2.SoapEnvelope;
+import org.ksoap2.SoapFault;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -19,6 +20,8 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,6 +66,7 @@ public class ResultsActivity extends Activity {
 		
 		// TODO: check if internet connection is available
 		//sendRequest(stopNumber);
+		//new Soap().execute();
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
@@ -79,7 +83,7 @@ public class ResultsActivity extends Activity {
 		}
     }
     
-	private void sendRequest(String stopNumber) throws HttpResponseException, IOException, XmlPullParserException {
+	private void sendRequest(String stopNumber) throws Exception {
 		final String SOAP_ACTION = "http://tempuri.org/GetInteger2";
 		final String METHOD_NAME = "GetInteger2";
 		final String NAMESPACE = "http://tempuri.org/";
@@ -201,5 +205,61 @@ public class ResultsActivity extends Activity {
 			return rootView;
 		}
 	}
+
+public class Soap extends AsyncTask<Void, Void, String> {
+	ProgressDialog progress;
+    String response = "";
+
+	public void onPreExecute() {
+		super.onPreExecute();
+	}
+
+	@Override
+	protected String doInBackground(Void... params) {
+		final String SOAP_ACTION = "http://tempuri.org/GetInteger2";
+		final String METHOD_NAME = "GetInteger2";
+		final String NAMESPACE = "http://tempuri.org/";
+		final String URL = "http://10.0.22:4711/Service1.asmx";
+		
+		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
+	    PropertyInfo pi = new PropertyInfo();
+	    pi.name = "i";
+	    pi.type = PropertyInfo.INTEGER_CLASS;
+	    request.addProperty(pi, 123);
+
+	    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+	    envelope.dotNet = true;
+	    envelope.setOutputSoapObject(request);
+
+	    HttpTransportSE androidHttpTransport = new HttpTransportSE(URL);
+	    try {
+			androidHttpTransport.call(SOAP_ACTION, envelope);
+		} catch (HttpResponseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XmlPullParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	    SoapPrimitive result = null;
+		try {
+			result = (SoapPrimitive)envelope.getResponse();
+		} catch (SoapFault e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    //int requestResult = Integer.parseInt(result.toString());
+	    //System.out.println("SOAP response is " + requestResult);
+		String requestResult = result.toString();
+		System.out.println("SOAP response is " + requestResult);
+		return requestResult;
+	}
+	
+}
 
 }
