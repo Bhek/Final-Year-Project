@@ -25,6 +25,7 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -119,22 +120,26 @@ public class ImageActivity extends Activity {
 		InputStream in = asset.open("sign.jpg");
 		bitmap = BitmapFactory.decodeStream(in);
 		
+		Bitmap signBitmap = bitmap;
+		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
 		imageProcessing();
 		Utils.matToBitmap(image, bitmap);
 		
-		AssetManager am = getResources().getAssets();
-		InputStream is = am.open("scratchcard.png");
-		Bitmap bm = BitmapFactory.decodeStream(is);
+		String stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
 		
-		String stopNumber = digitRecognition(bitmap);
 		
+				
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(bitmap);
+		mImageView.setImageBitmap(signBitmap);
 		
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(stopNumber);
+		
+		Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
+		intent.putExtra("rtpi stop", stopNumber);
+		startActivity(intent);
 	}
 	
 	private void imageProcessing() throws IOException {
