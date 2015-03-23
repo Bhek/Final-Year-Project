@@ -6,13 +6,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.opencv.android.Utils;
+import org.opencv.core.Core;
 //import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -109,34 +115,72 @@ public class ImageActivity extends Activity {
 			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
 		}
 		
+		AssetManager asset = getResources().getAssets();
+		InputStream in = asset.open("sign.jpg");
+		bitmap = BitmapFactory.decodeStream(in);
+		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		backProject();
+		imageProcessing();
 		Utils.matToBitmap(image, bitmap);
 		
 		AssetManager am = getResources().getAssets();
 		InputStream is = am.open("scratchcard.png");
 		Bitmap bm = BitmapFactory.decodeStream(is);
 		
-		String stopNumber = digitRecognition(bm);
+		String stopNumber = digitRecognition(bitmap);
 		
 		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
-		mImageView.setImageBitmap(bm);
+		mImageView.setImageBitmap(bitmap);
 		
 		TextView tv = (TextView) findViewById(R.id.textView1);
 		tv.setText(stopNumber);
 	}
 	
-	private void backProject() throws IOException {
+	private void imageProcessing() throws IOException {
+		Mat backProj = backProject();
+		
+		Mat im1 = new Mat();
+		Mat im2 = new Mat();
+		backProj.copyTo(im1);
+		backProj.copyTo(im2);
+		//image.convertTo(im2, CvType.CV_8U);
+		backProj.convertTo(im1, CvType.CV_8U);
+
+		//vector<vector<Point>> contours;
+		//Point[][] contours;
+		List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+		//Imgproc.findContours(im2, contours, im2, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+		Imgproc.findContours(im1, contours, im2, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_NONE);
+
+		double maxArea = 0;
+		int maxIdX = 0;
+		for (int i = 0; i < contours.size(); i++) {
+			//double area = contourArea(contours[i]);
+			double area = Imgproc.contourArea(contours.get(i));
+			maxIdX = area > maxArea ? i : maxIdX;
+			maxArea = area > maxArea ? area : maxArea;
+		}
+
+		im1.setTo(new Scalar(0));
+		Imgproc.drawContours(im1, contours, maxIdX, new Scalar(255), -1);
+		
+		backProj.copyTo(image);
+		
+		Core.absdiff(backProj, im1, image);
+	}
+	
+	private Mat backProject() throws IOException {
+		Mat backProj = new Mat();
 		AssetManager am = getResources().getAssets();
-		InputStream is = am.open("scratchcard.png");
+		InputStream is = am.open("yellow.png");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
 		
 		ArrayList<Mat> imageList = new ArrayList<Mat>();
-        Imgproc.cvtColor(image, image, Imgproc.COLOR_BGR2HSV);
-		imageList.add(image);
+        Imgproc.cvtColor(image, backProj, Imgproc.COLOR_BGR2HSV);
+		imageList.add(backProj);
         //MatOfInt ch = new MatOfInt(0);
 		//Core.mixChannels(imageList, imageList, ch);
 		
@@ -152,7 +196,9 @@ public class ImageActivity extends Activity {
         
         Imgproc.calcHist(yellowList, channels, new Mat(), hist, histSize, ranges);
         
-        Imgproc.calcBackProject(imageList, channels, hist, image, ranges, 1);
+        Imgproc.calcBackProject(imageList, channels, hist, backProj, ranges, 1);
+        
+        return backProj;
 	}
 	
 	private String digitRecognition(Bitmap bitmap) {
