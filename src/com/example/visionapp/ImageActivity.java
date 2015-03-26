@@ -10,13 +10,11 @@ import java.util.List;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
-//import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -37,7 +35,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -124,7 +121,7 @@ public class ImageActivity extends Activity {
 		bitmap = BitmapFactory.decodeStream(in);
 		
 		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
-		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
+		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
 		mImageView.setImageBitmap(signBitmap);
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
@@ -134,7 +131,7 @@ public class ImageActivity extends Activity {
 		
 		stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
 		
-		TextView tv = (TextView) findViewById(R.id.textView1);
+		TextView tv = (TextView) findViewById(R.id.stopNumber);
 		tv.setText(stopNumber);
 	}
 	
@@ -202,7 +199,6 @@ public class ImageActivity extends Activity {
 	
 	private String digitRecognition(Bitmap bitmap) {
 		TessBaseAPI tess = new TessBaseAPI();
-		//tess.init("/storage/sdcard0/FYP/", "eng");
 		tess.init(DATA_PATH, lang);
 		tess.setVariable("tessedit_char_whitelist", "0123456789");
 		tess.setImage(bitmap);
