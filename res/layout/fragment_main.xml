@@ -65,4 +65,35 @@
         android:onClick="quickSearch"
         android:text="@string/quick" /> -->
 
+    <ImageView
+        android:id="@+id/dbIcon"
+        android:contentDescription="@string/dbDesc"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:src="@drawable/db_icon" />
+
+    <Button
+        android:id="@+id/takepicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:onClick="takePicture"
+        android:text="@string/takePicture" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dbIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/launchText"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
 </RelativeLayout>
