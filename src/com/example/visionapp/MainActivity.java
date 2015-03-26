@@ -59,6 +59,13 @@ public class MainActivity extends Activity {
         return returnedBitmap;
     }
     
+    public void quickSearch(View view) throws Exception {
+    	String stopNumber = "37";
+    	Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
+		intent.putExtra("rtpi stop", stopNumber);
+		startActivity(intent);
+    }
+    
     public void takePicture(View view) throws Exception {
     	Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
     	if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
