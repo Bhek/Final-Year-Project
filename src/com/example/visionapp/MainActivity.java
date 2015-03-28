@@ -59,16 +59,6 @@ public class MainActivity extends Activity {
         return returnedBitmap;
     }
     
-    public void getRtpi(View view) throws Exception {
-    	EditText mEdit = (EditText) findViewById(R.id.editText1);
-    	String stopNumber = mEdit.getText().toString();
-    	mEdit.setText("");
-
-    	Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
-		intent.putExtra("rtpi stop", stopNumber);
-		startActivity(intent);
-    }
-    
     public void quickSearch(View view) throws Exception {
     	String stopNumber = "37";
     	Intent intent = new Intent(getBaseContext(), ResultsActivity.class);
@@ -86,10 +76,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-			ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
 			Bundle extras = data.getExtras();
 			Bitmap imageBitmap = (Bitmap) extras.get("data");
-			mImageView.setImageBitmap(imageBitmap);
 			
 			Intent intent = new Intent(getBaseContext(), ImageActivity.class);
 			intent.putExtra("image", imageBitmap);

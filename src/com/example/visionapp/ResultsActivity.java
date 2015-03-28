@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -50,22 +51,37 @@ public class ResultsActivity extends Activity {
 		if (extras != null) {
 			stopNumber = extras.getString("rtpi stop");
 		}
-		System.out.println(stopNumber);
 		
 		// TODO: check if internet connection is available
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
 		
-		for (int i = 0; i < results.length; i++) {
-			TableRow row = new TableRow(this);
-			for (int j = 0; j < results[i].length; j++) {
-				TextView t = new TextView(this);
-				t.setText(" " + results[i][j] + " ");
-				row.addView(t);
+		if (results.length <= 10) {
+			for (int i = 0; i < results.length; i++) {
+				TableRow row = new TableRow(this);
+				for (int j = 0; j < results[i].length; j++) {
+					TextView t = new TextView(this);
+					t.setTextSize(20);
+					t.setText(" " + results[i][j] + " ");
+					row.addView(t);
+				}
+				
+				table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			}
-			
-			table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+		}
+		else {
+			for (int i = 0; i < 10; i++) {
+				TableRow row = new TableRow(this);
+				for (int j = 0; j < results[i].length; j++) {
+					TextView t = new TextView(this);
+					t.setTextSize(20);
+					t.setText(" " + results[i][j] + " ");
+					row.addView(t);
+				}
+				
+				table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+			}
 		}
 		
     }

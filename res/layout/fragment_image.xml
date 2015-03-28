@@ -8,42 +8,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.visionapp.ImageActivity$PlaceholderFragment" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:contentDescription="@string/imgDesc"
-        android:layout_width="200dp"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/db_icon" />
-
     <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageView1"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="21dp"
+        android:layout_alignBottom="@+id/search"
+        android:layout_alignLeft="@+id/cameraResult"
         android:onClick="goBack"
         android:text="@string/back"
         android:visibility="visible" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/back"
-        android:layout_alignRight="@+id/imageView1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/cameraResult"
+        android:layout_marginBottom="43dp"
         android:onClick="getRtpi"
         android:text="@string/search" />
 
+    <ImageView
+        android:id="@+id/cameraResult"
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/resultDesc" />
+
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/askStopNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
+        android:layout_above="@+id/stopNumber"
         android:layout_centerHorizontal="true"
-        android:text="@string/back" />
+        android:gravity="center"
+        android:text="@string/askStopNumber"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/stopNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/back"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:text="@string/resultDesc"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
