@@ -26,6 +26,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
@@ -126,7 +127,7 @@ public class ImageActivity extends Activity {
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		imageProcessing();
+		imageProcessing(signBitmap);
 		Utils.matToBitmap(image, bitmap);
 		
 		stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
@@ -135,7 +136,7 @@ public class ImageActivity extends Activity {
 		tv.setText(stopNumber);
 	}
 	
-	private void imageProcessing() throws IOException {
+	private void imageProcessing(Bitmap testBitmap) throws IOException {
 		Mat backProj = backProject();
 		
 		Mat im1 = new Mat();
@@ -158,7 +159,11 @@ public class ImageActivity extends Activity {
 		im1.setTo(new Scalar(0));
 		Imgproc.drawContours(im1, contours, maxIdX, new Scalar(255), -1);
 		
-		backProj.copyTo(image);
+		Utils.matToBitmap(backProj, testBitmap);
+		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
+		mImageView.setImageBitmap(testBitmap);
+		
+		//backProj.copyTo(image);
 		
 		Core.absdiff(backProj, im1, image);
 		
@@ -169,7 +174,9 @@ public class ImageActivity extends Activity {
 	private Mat backProject() throws IOException {
 		Mat backProj = new Mat();
 		AssetManager am = getResources().getAssets();
-		InputStream is = am.open("yellow.png");
+		//InputStream is = am.open("yellow.png");
+		InputStream is = am.open("yellow.jpg");
+		//InputStream is = am.open("yellow b.jpg");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
