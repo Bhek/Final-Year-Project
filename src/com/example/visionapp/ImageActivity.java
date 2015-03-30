@@ -10,13 +10,11 @@ import java.util.List;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Core;
-//import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfFloat;
 import org.opencv.core.MatOfInt;
 import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -28,6 +26,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
@@ -37,7 +36,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -124,21 +122,21 @@ public class ImageActivity extends Activity {
 		bitmap = BitmapFactory.decodeStream(in);
 		
 		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
-		ImageView mImageView = (ImageView) findViewById(R.id.imageView1);
+		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
 		mImageView.setImageBitmap(signBitmap);
 		
 		image = new Mat(bitmap.getWidth(), bitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(bitmap, image);
-		imageProcessing();
+		imageProcessing(signBitmap);
 		Utils.matToBitmap(image, bitmap);
 		
 		stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
 		
-		TextView tv = (TextView) findViewById(R.id.textView1);
+		TextView tv = (TextView) findViewById(R.id.stopNumber);
 		tv.setText(stopNumber);
 	}
 	
-	private void imageProcessing() throws IOException {
+	private void imageProcessing(Bitmap testBitmap) throws IOException {
 		Mat backProj = backProject();
 		
 		Mat im1 = new Mat();
@@ -161,7 +159,11 @@ public class ImageActivity extends Activity {
 		im1.setTo(new Scalar(0));
 		Imgproc.drawContours(im1, contours, maxIdX, new Scalar(255), -1);
 		
-		backProj.copyTo(image);
+		Utils.matToBitmap(backProj, testBitmap);
+		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
+		mImageView.setImageBitmap(testBitmap);
+		
+		//backProj.copyTo(image);
 		
 		Core.absdiff(backProj, im1, image);
 		
@@ -172,7 +174,9 @@ public class ImageActivity extends Activity {
 	private Mat backProject() throws IOException {
 		Mat backProj = new Mat();
 		AssetManager am = getResources().getAssets();
-		InputStream is = am.open("yellow.png");
+		//InputStream is = am.open("yellow.png");
+		InputStream is = am.open("yellow.jpg");
+		//InputStream is = am.open("yellow b.jpg");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
@@ -202,7 +206,6 @@ public class ImageActivity extends Activity {
 	
 	private String digitRecognition(Bitmap bitmap) {
 		TessBaseAPI tess = new TessBaseAPI();
-		//tess.init("/storage/sdcard0/FYP/", "eng");
 		tess.init(DATA_PATH, lang);
 		tess.setVariable("tessedit_char_whitelist", "0123456789");
 		tess.setImage(bitmap);

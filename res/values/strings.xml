@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">Dublin Bus App</string>
-    <string name="hello_world">Hello world!</string>
+    
+    <string name="appName">Dublin Bus App</string>
     <string name="action_settings">Settings</string>
-    <string name="stop">Enter a stop number:</string>
+    
+    <!-- Main Activity -->
+    <string name="dbDesc">Dublin Bus Icon</string>
+    <string name="launchText">Take a picture of a bus stop to obtain RTPI</string>
+    <string name="takePicture">Take Picture</string>
+    
+    <!-- Image Activity -->
+    <string name="resultDesc">Camera image</string>
+    <string name="askStopNumber">Stop number is:</string>
     <string name="search">Search</string>
+    
+    <!-- Image & Results Activity -->
     <string name="back">Back</string>
-    <string name="title_activity_results">ResultsActivity</string>
-    <string name="take_picture">Take Picture</string>
-    <string name="imgDesc">Camera Image</string>
-    <string name="quick">Quick Search - 37</string>
-    <string name="title_activity_image">ImageActivity</string>
 
 </resources>
