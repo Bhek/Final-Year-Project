@@ -39,13 +39,13 @@
         android:text="@string/launchText"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <Button
+    <!-- <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:onClick="quickSearch"
-        android:text="Quick" />
+        android:text="Quick" /> -->
 
 </RelativeLayout>
