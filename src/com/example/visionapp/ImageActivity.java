@@ -147,7 +147,8 @@ public class ImageActivity extends Activity {
 		imageProcessing(signBitmap);
 		Utils.matToBitmap(image, bitmap);
 		
-		stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
+		//stopNumber = digitRecognition(bitmap).split("\n")[1].replace(" ", "");
+		stopNumber = digitRecognition(bitmap);
 		
 		TextView tv = (TextView) findViewById(R.id.stopNumber);
 		tv.setText(stopNumber);
@@ -175,16 +176,21 @@ public class ImageActivity extends Activity {
 
 		im1.setTo(new Scalar(0));
 		Imgproc.drawContours(im1, contours, maxIdX, new Scalar(255), -1);
+				
+		Imgproc.threshold(backProj, backProj, 10, 255, Imgproc.THRESH_BINARY);
 		
 		//backProj.copyTo(image);
-		
 		Core.absdiff(backProj, im1, image);
 		
-		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
-		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));
+		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
+		
+		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));
+		
+		//Imgproc.threshold(image, image, 127, 255, Imgproc.THRESH_BINARY);
 
 		
-		Utils.matToBitmap(backProj, testBitmap);
+		Utils.matToBitmap(image, testBitmap);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
 		mImageView.setImageBitmap(testBitmap);	}
 	
@@ -196,7 +202,8 @@ public class ImageActivity extends Activity {
 		//InputStream is = am.open("yellow b.jpg");
 		//InputStream is = am.open("yellow c.png");
 		//InputStream is = am.open("yellow d.png");
-		InputStream is = am.open("yellow e.png");
+		//InputStream is = am.open("yellow e.png");
+		InputStream is = am.open("greyellow.png");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
