@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -117,9 +118,25 @@ public class ImageActivity extends Activity {
 			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
 		}
 		
+		Bitmap temp = bitmap.copy(bitmap.getConfig(), true);
+		
+		FileOutputStream out = null;
+		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+		File file = new File(DATA_PATH + timeStamp + ".png");
+		try {
+			out = new FileOutputStream(file);
+			temp.compress(Bitmap.CompressFormat.PNG, 100, out);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out != null) {
+				out.close();
+			}
+		}
+		
 		AssetManager asset = getResources().getAssets();
 		InputStream in = asset.open("sign.jpg");
-		bitmap = BitmapFactory.decodeStream(in);
+		//bitmap = BitmapFactory.decodeStream(in);
 		
 		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
@@ -159,24 +176,27 @@ public class ImageActivity extends Activity {
 		im1.setTo(new Scalar(0));
 		Imgproc.drawContours(im1, contours, maxIdX, new Scalar(255), -1);
 		
-		Utils.matToBitmap(backProj, testBitmap);
-		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
-		mImageView.setImageBitmap(testBitmap);
-		
 		//backProj.copyTo(image);
 		
 		Core.absdiff(backProj, im1, image);
 		
 		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
 		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));
-	}
+
+		
+		Utils.matToBitmap(backProj, testBitmap);
+		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
+		mImageView.setImageBitmap(testBitmap);	}
 	
 	private Mat backProject() throws IOException {
 		Mat backProj = new Mat();
 		AssetManager am = getResources().getAssets();
 		//InputStream is = am.open("yellow.png");
-		InputStream is = am.open("yellow.jpg");
+		//InputStream is = am.open("yellow.jpg");
 		//InputStream is = am.open("yellow b.jpg");
+		//InputStream is = am.open("yellow c.png");
+		//InputStream is = am.open("yellow d.png");
+		InputStream is = am.open("yellow e.png");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
