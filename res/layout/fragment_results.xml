@@ -20,7 +20,7 @@
 
     </TableLayout>
 
-    <Button
+    <!-- <Button
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,6 +29,6 @@
         android:layout_marginBottom="29dp"
         android:onClick="goBack"
         android:text="@string/back"
-        android:visibility="visible" />
+        android:visibility="visible" /> -->
 
 </RelativeLayout>
