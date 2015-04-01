@@ -182,13 +182,10 @@ public class ImageActivity extends Activity {
 		//backProj.copyTo(image);
 		Core.absdiff(backProj, im1, image);
 		
-		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
+		// Opening for close-up shots
+		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3, 3)));
+		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
 		
-		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
-		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));
-		
-		//Imgproc.threshold(image, image, 127, 255, Imgproc.THRESH_BINARY);
-
 		
 		Utils.matToBitmap(image, testBitmap);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
