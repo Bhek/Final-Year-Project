@@ -136,7 +136,7 @@ public class ImageActivity extends Activity {
 		
 		AssetManager asset = getResources().getAssets();
 		InputStream in = asset.open("sign.jpg");
-		//bitmap = BitmapFactory.decodeStream(in);
+		bitmap = BitmapFactory.decodeStream(in);
 		
 		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
@@ -183,9 +183,12 @@ public class ImageActivity extends Activity {
 		Core.absdiff(backProj, im1, image);
 		
 		// Opening for close-up shots
-		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3, 3)));
-		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
+		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3, 3)));
+		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
 		
+		// Opening for loaded image
+		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));		
 		
 		Utils.matToBitmap(image, testBitmap);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
@@ -208,13 +211,10 @@ public class ImageActivity extends Activity {
 		ArrayList<Mat> imageList = new ArrayList<Mat>();
         Imgproc.cvtColor(image, backProj, Imgproc.COLOR_BGR2HSV);
 		imageList.add(backProj);
-        //MatOfInt ch = new MatOfInt(0);
-		//Core.mixChannels(imageList, imageList, ch);
 		
 		ArrayList<Mat> yellowList = new ArrayList<Mat>();
         Imgproc.cvtColor(yellow, yellow, Imgproc.COLOR_BGR2HSV);
         yellowList.add(yellow);
-		//Core.mixChannels(yellowList, yellowList, ch);
 		
 		MatOfInt channels = new MatOfInt(0);
         Mat hist= new Mat();
