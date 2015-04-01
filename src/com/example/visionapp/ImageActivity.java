@@ -136,7 +136,7 @@ public class ImageActivity extends Activity {
 		
 		AssetManager asset = getResources().getAssets();
 		InputStream in = asset.open("sign.jpg");
-		bitmap = BitmapFactory.decodeStream(in);
+		//bitmap = BitmapFactory.decodeStream(in);
 		
 		Bitmap signBitmap = bitmap.copy(bitmap.getConfig(), true);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
@@ -186,9 +186,13 @@ public class ImageActivity extends Activity {
 		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3, 3)));
 		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
 		
+		// Opening for "normal" shots
+		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(3, 3)));
+		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(2, 2)));
+		
 		// Opening for loaded image
-		Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
-		Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));		
+		//Imgproc.erode(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(5, 5)));
+		//Imgproc.dilate(image, image, Imgproc.getStructuringElement(Imgproc.MORPH_ELLIPSE, new Size(15, 15)));		
 		
 		Utils.matToBitmap(image, testBitmap);
 		ImageView mImageView = (ImageView) findViewById(R.id.cameraResult);
@@ -203,7 +207,9 @@ public class ImageActivity extends Activity {
 		//InputStream is = am.open("yellow c.png");
 		//InputStream is = am.open("yellow d.png");
 		//InputStream is = am.open("yellow e.png");
-		InputStream is = am.open("greyellow.png");
+		//InputStream is = am.open("greyellow.png");
+		//InputStream is = am.open("greyellow b.png");
+		InputStream is = am.open("greyellow c.png");
 		Bitmap yellowBitmap = BitmapFactory.decodeStream(is);
 		yellow = new Mat(yellowBitmap.getWidth(), yellowBitmap.getHeight(), CvType.CV_8UC1);
 		Utils.bitmapToMat(yellowBitmap, yellow);
