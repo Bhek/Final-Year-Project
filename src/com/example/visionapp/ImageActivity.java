@@ -118,7 +118,7 @@ public class ImageActivity extends Activity {
 			bitmap = (Bitmap) getIntent().getParcelableExtra("image");
 		}
 		
-		Bitmap temp = bitmap.copy(bitmap.getConfig(), true);
+		/*Bitmap temp = bitmap.copy(bitmap.getConfig(), true);
 		
 		FileOutputStream out = null;
 		String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
@@ -132,7 +132,7 @@ public class ImageActivity extends Activity {
 			if (out != null) {
 				out.close();
 			}
-		}
+		}*/
 		
 		AssetManager asset = getResources().getAssets();
 		InputStream in = asset.open("sign.jpg");
