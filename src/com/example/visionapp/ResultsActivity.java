@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -56,28 +58,40 @@ public class ResultsActivity extends Activity {
     	Document doc = sendGet(stopNumber);
 		String[][] results = parseDoc(doc);
 		TableLayout table = (TableLayout) findViewById(R.id.tableLayout1);
-		
+				
 		if (results.length <= 10) {
+			TableRow.LayoutParams params = new TableRow.LayoutParams();
+			params.setMargins(1, 1, 1, 1);
+			
 			for (int i = 0; i < results.length; i++) {
 				TableRow row = new TableRow(this);
+				row.setBackgroundColor(Color.BLACK);
+				
 				for (int j = 0; j < results[i].length; j++) {
 					TextView t = new TextView(this);
 					t.setTextSize(20);
 					t.setText(" " + results[i][j] + " ");
-					row.addView(t);
+					t.setBackgroundColor(Color.WHITE);
+					row.addView(t, params);
 				}
 				
 				table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 			}
 		}
 		else {
+			TableRow.LayoutParams params = new TableRow.LayoutParams();
+			params.setMargins(1, 1, 1, 1);
+			
 			for (int i = 0; i < 10; i++) {
 				TableRow row = new TableRow(this);
+				row.setBackgroundColor(Color.BLACK);
+				
 				for (int j = 0; j < results[i].length; j++) {
 					TextView t = new TextView(this);
 					t.setTextSize(20);
 					t.setText(" " + results[i][j] + " ");
-					row.addView(t);
+					t.setBackgroundColor(Color.WHITE);
+					row.addView(t, params);
 				}
 				
 				table.addView(row, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));

@@ -89,12 +89,14 @@ containing a value of this type.
         /**  Main Activity 
          */
         public static final int dbDesc=0x7f060002;
+        public static final int hello_world=0x7f06000a;
         public static final int launchText=0x7f060003;
         /**  Image Activity 
          */
         public static final int resultDesc=0x7f060005;
         public static final int search=0x7f060007;
         public static final int takePicture=0x7f060004;
+        public static final int title_activity_table=0x7f060009;
     }
     public static final class style {
         /** 
